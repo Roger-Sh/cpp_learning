@@ -1,0 +1,11 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+PROJECT(bipartite_match)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+INCLUDE_DIRECTORIES(inc)
+
+ADD_EXECUTABLE(hungary_match src/hungary_match.cpp)
+ADD_EXECUTABLE(km_match src/km_match.cpp)
+
+
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

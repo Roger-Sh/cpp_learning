@@ -1,0 +1,17 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+PROJECT(BSpline)
+SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
+FIND_PACKAGE(Eigen3 REQUIRED)
+
+INCLUDE_DIRECTORIES(
+include
+${EIGEN3_INCLUDE_DIR}
+)
+
+# BSPline
+ADD_EXECUTABLE(BSpline_test src/BSpline_test.cpp src/BSpline.cpp)
+
+# SegTrailInterpolation
+ADD_EXECUTABLE(SegTrailInterpolation src/SegTrailInterpolation.cpp)
