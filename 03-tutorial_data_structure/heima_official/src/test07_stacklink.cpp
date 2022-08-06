@@ -185,8 +185,8 @@ void test11_stackApplication_nearMatch()
     对于符号：
         左括号：进栈
         运算符号：与栈顶符号进行优先级比较
-            若栈顶符号优先级低，此符号进栈 （左括号优先级最低）* / > +- > )(
-            若栈顶符号优先级不低，将栈顶符号弹出并输出，此符号进栈
+            若栈顶符号优先级低，此符号进栈 （左括号优先级最低）* / 大于 +- 大于 )(
+            若栈顶符号优先级不低，大于等于，将栈顶符号弹出并输出，此符号进栈
         右括号：将栈顶符号弹出并输出，直到匹配左括号
 遍历结束，将栈中所有符号弹出并输出
 */
@@ -262,6 +262,66 @@ namespace ST_L
             free(mychar);
         }
     }
+
+    // 返回运算符号优先级
+    int GetPriority(char *p)
+    {
+        if (*p == '*' || *p == '/')
+        {
+            return 2;
+        }
+
+        if (*p == '+' || *p == '-')
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    // 操作运算符号
+    void OperatorOperate(StackLink* stack, char* p)
+    {
+        // 取出栈顶符号
+        ST_L::MyChar* mychar = (ST_L::MyChar*) ST_L::top_StackLink(stack);
+        if (mychar == NULL)
+        {
+            ST_L::push_StackLink(stack, (LinkNode*)CreateMyChar(p));
+            return;
+        }
+
+        // 如果栈顶优先级低于当前字符优先级， 直接入栈
+        if (ST_L::GetPriority(mychar->pAddr) < ST_L::GetPriority(p))
+        {
+            ST_L::push_StackLink(stack, (LinkNode*)CreateMyChar(p));
+            return;
+        }
+
+        // 如果栈顶符号优先级不低
+        else
+        {
+            while (ST_L::getSize_StackLink(stack) > 0)
+            {
+                MyChar* mychar2 = (MyChar*) top_StackLink(stack);
+
+                // 如果优先级低， 当前符号入栈
+                if (ST_L::GetPriority(mychar2->pAddr) < ST_L::GetPriority(p))
+                {
+                    ST_L::push_StackLink(stack, (LinkNode*)CreateMyChar(p));
+                    break;
+                }
+
+                // 输出
+                printf("%c", *(mychar2->pAddr));
+
+                // 弹出
+                pop_StackLink(stack);
+            
+                // 释放
+                free(mychar2);
+            }   
+        }
+    }
 }
 
 void test12_stackApplication_ReverseNotation()
@@ -292,10 +352,25 @@ void test12_stackApplication_ReverseNotation()
             ST_L::RightOperate(stack, p);
         }
 
-
-
+        // 如果是运算符号
+        if (ST_L::isOperator(p))
+        {
+            ST_L::OperatorOperate(stack, p);
+        }
         p++;
     }
+
+    while (ST_L::getSize_StackLink(stack) > 0)
+    {
+        ST_L::MyChar* mychar = (ST_L::MyChar*) ST_L::top_StackLink(stack);
+    
+        printf("%c", *(mychar->pAddr));
+
+        ST_L::pop_StackLink(stack);
+        free(mychar);
+    }
+
+    std::cout << std::endl;
 }
 
 
