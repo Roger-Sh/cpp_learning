@@ -5,9 +5,10 @@
 
 #include "DynamicArray.h"
 
-/*
-测试动态数组
-*/
+/**
+ * @brief 测试动态数组
+ * 
+ */
 void test01_dynamic_array()
 {
     // init dynamic array
@@ -44,7 +45,16 @@ void test01_dynamic_array()
     DA::freespace_dynamic_array(my_array);
 }
 
-int main()
+/**
+ * @brief 
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
+int main(int argc, char const *argv[])
 {
     test01_dynamic_array();
+
+    return 0;
 }
