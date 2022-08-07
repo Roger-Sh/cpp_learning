@@ -373,6 +373,101 @@ void test12_stackApplication_ReverseNotation()
     std::cout << std::endl;
 }
 
+/**
+ * @brief 后缀表达式求解
+ * 遍历后缀表达式中的数字和符号
+ *      数字：进栈
+ *      符号：
+ *          从栈中弹出右操作数
+ *          从栈中弹出左操作数
+ *          根据符号进行运算
+ *          将运算结果压入栈中
+ * 遍历结束：栈中唯一数字为计算结果
+ */
+
+namespace ST_L
+{
+    typedef struct MYNUM
+    {
+        LinkNode node;
+        int val;
+    } MyNum;
+}
+
+void test13_stackApplication_calc_reverseNotation()
+{
+    // init reverse notation
+    char *str = (char *)"831-5*+";
+    char *p = str;
+
+    // 创建栈
+    ST_L::StackLink* stack = ST_L::init_StackLink(); 
+
+    while (*p != '\0')
+    {
+        // 如果是数字，直接入栈
+        if (ST_L::IsNumber(p))
+        {
+            ST_L::MyNum* num = (ST_L::MyNum*)malloc(sizeof(ST_L::MyNum));
+            num->val = *p - '0';
+            
+            // 入栈
+            ST_L::push_StackLink(stack, (ST_L::LinkNode*) num);
+
+        }
+
+        // 如果是运算符号
+        if (ST_L::isOperator(p))
+        {
+            // 从栈中弹出右操作数
+            ST_L::MyNum* right = (ST_L::MyNum*) ST_L::top_StackLink(stack);
+            int num_r = right->val;
+            ST_L::pop_StackLink(stack);
+            free(right);
+
+            // 从栈中弹出左操作数
+            ST_L::MyNum* left = (ST_L::MyNum*) ST_L::top_StackLink(stack);
+            int num_l = left->val;
+            ST_L::pop_StackLink(stack);
+            free(left);
+            
+            // 根据符号进行运算
+            int result;
+            if (*p == '+')
+            {
+                result = num_l + num_r;
+            } 
+            else if (*p == '-')
+            {
+                result = num_l - num_r;
+            }
+            else if (*p == '*')
+            {
+                result = num_l * num_r;
+            }
+            else if (*p == '/')
+            {
+                result = num_l / num_r;
+            }
+
+            // 将运算结果压入栈中
+            ST_L::MyNum* num_result = (ST_L::MyNum*)malloc(sizeof(ST_L::MyNum));
+            num_result->val = result;
+            ST_L::push_StackLink(stack, (ST_L::LinkNode*) num_result);
+        }
+        p++;
+    }
+
+    // show result
+    if (ST_L::getSize_StackLink(stack) == 1)
+    {
+        ST_L::MyNum* result = (ST_L::MyNum*)ST_L::top_StackLink(stack);
+        int result_num = result->val;
+        printf("result: %d \n", result_num);
+    }
+
+    ST_L::freeSpace_StackLink(stack);
+}
 
 /**
  * @brief main
@@ -385,9 +480,14 @@ int main(int argc, char const *argv[])
 {
     test07_stacklink();
 
+    // 匹配括号
     test11_stackApplication_nearMatch();
 
+    // 中缀转后缀
     test12_stackApplication_ReverseNotation();
+
+    // 后缀求解
+    test13_stackApplication_calc_reverseNotation();
 
     return 0;
 }
