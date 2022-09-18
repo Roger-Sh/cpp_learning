@@ -53,6 +53,7 @@ void test01()
     // 使用n个字符c初始化
 	string s4(10, 'a');
 	cout << "str3 = " << s4 << endl;
+
 }
 
 int main() {

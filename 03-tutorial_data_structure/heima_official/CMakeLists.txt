@@ -49,3 +49,8 @@ ADD_EXECUTABLE(test08_queueseq
 ADD_EXECUTABLE(test09_queuelink
     src/test09_queuelink.cpp 
     src/QueueLink.cpp)
+
+# test10_binaryTree
+ADD_EXECUTABLE(test10_binarytree
+    src/test10_binarytree
+    src/BinaryTree)
