@@ -9,4 +9,5 @@ INCLUDE_DIRECTORIES(include)
 ADD_EXECUTABLE(union_test src/union_test.cpp )
 ADD_EXECUTABLE(struct_copy_test src/struct_copy_test.cpp)
 ADD_EXECUTABLE(cpp_input_test src/cpp_input_test.cpp)
-
+ADD_EXECUTABLE(cart_shuffle src/cart_shuffle.cpp)
+ADD_EXECUTABLE(class_in_class src/class_in_class.cpp)
