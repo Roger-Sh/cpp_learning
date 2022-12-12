@@ -18,7 +18,7 @@
       - stack 栈
       - deque 双端数组
       - queue 队列
-      - set 堆
+      - set 集合
       - map 
       - ...
   - 算法，algorithm
@@ -1165,29 +1165,1283 @@ int main(int argc, char **argv)
 
 
 
-Map/Multimap
+## Map/Multimap
+
+### Map 特点
+
+-   map中所有元素都是pair
+    -   map中所有元素都是成对出现，插入数据时候要使用对组
+-   pair中第一个元素为key（键值），起到索引作用，第二个元素为value（实值）
+    -   可以根据key值快速找到value值
+-   所有元素都会根据元素的键值自动排序
+    -   unordered_map 没有自动排序
+-   map/multimap属于**关联式容器**，底层结构是用二叉树实现。
+    -   map不允许容器中有重复key值元素
+    -   multimap允许容器中有重复key值元素
 
 
 
-Unordered_map
+### Map 构造与赋值
+
+```c++
+// map默认构造函数
+map<T1, T2> mp; 
+
+// 拷贝构造函数
+map(const map &mp);
+
+// 重载等号操作符
+map& operator=(const map &mp);
+```
 
 
 
-Hashmap
+### Map 大小与交换
+
+```c++
+// 返回容器中元素的数目
+map.size();
+
+// 判断容器是否为空
+map.empty();
+
+// 交换两个集合容器
+map.swap(st);
+```
 
 
 
-Hashset
+### Map 插入与删除
+
+```c++
+// 在容器中插入元素。
+//第一种插入方式
+m.insert(pair<int, int>(1, 10));
+//第二种插入方式
+m.insert(make_pair(2, 20));
+//第三种插入方式
+m.insert(map<int, int>::value_type(3, 30));
+//第四种插入方式
+m[4] = 40; 
+
+// 清除所有元素
+map.clear();
+
+// 删除pos迭代器所指的元素，返回下一个元素的迭代器。
+map.erase(pos);
+
+// 删除区间[beg,end)的所有元素 ，返回下一个元素的迭代器。
+map.erase(beg, end);
+
+// 删除容器中值为key的元素。
+map.erase(key);
+```
+
+
+
+### Map 查找与统计
+
+```c++
+// 查找key是否存在,若存在，返回该键的元素的迭代器；若不存在，返回set.end();
+find(key);
+map<int, int>::iterator pos = m.find(3);
+if (pos != m.end())
+    cout << "找到了元素 key = " << (*pos).first << " value = " << (*pos).second << endl;
+else
+    cout << "未找到元素" << endl;
+// 统计key的元素个数
+count(key);
+```
+
+
+
+### Map 排序
+
+-   map容器默认排序规则为 按照key值进行 从小到大排序
+-   利用仿函数，可以改变排序规则
+
+```c++
+#include <map>
+
+class MyCompare {
+public:
+	bool operator()(int v1, int v2) {
+		return v1 > v2;
+	}
+};
+
+void test01() 
+{
+	//默认从小到大排序
+	//利用仿函数实现从大到小排序
+	map<int, int, MyCompare> m;
+
+	m.insert(make_pair(1, 10));
+	m.insert(make_pair(2, 20));
+	m.insert(make_pair(3, 30));
+	m.insert(make_pair(4, 40));
+	m.insert(make_pair(5, 50));
+
+	for (map<int, int, MyCompare>::iterator it = m.begin(); it != m.end(); it++) {
+		cout << "key:" << it->first << " value:" << it->second << endl;
+	}
+}
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
 
 
 
 
 
-STL 函数对象
+## Unordered_map
+
+### Unordered_map 特点
+
+-   unordered_map是一种关联容器，存储基于键值和映射组成的元素，即key-value。允许基于键快速查找元素。在unordered_map中，键值唯一标识元素，映射的值是一个与该对象关联的内容的对象。
+-   Unordered_map 与 map 的对比
+    -   unordered_map的无序体现在内部存储结构为**哈希表**，以便通过键值快速访问元素。
+    -   与之对应的有序的关联容器为map，map的有序体现在内部存储结构为**红黑树**，存储时元素自动按照从小到大的顺序排列。
+-   查找的效率
+    -   unordered_map查找效率更高，可以达到`O(1)`，但是对于元素子集的范围迭代效率较低。
+    -   对于map，按照中序遍历的遍历次序，能够方便迭代得出从小到大的元素
+-   属性
+    -   关联性
+        -   关联容器中的元素由他们的键引用，而不是由他们在容器中的绝对位置引用。
+    -   无序性
+        -   无序容器使用散列表来组织它们的元素，散列表允许通过它们的键快速访问元素。
+    -   Map映射
+        -   每个元素将一个键key与一个映射值value相关联：键意味着标识其主要内容是映射值的元素。
+    -   key的唯一性
+        -   在容器中没有两个元素有相同的key
+    -   allocator-aware
+        -   分配器对象来动态地处理它的存储需求
 
 
 
-STL 常用算法
+### Unordered_map 构造与初始化
+
+```c++
+// 默认构造函数
+unordered_map<int, string> umap;
+
+// 使用初始化列表初始化
+// 显式调用C++的构造函数
+unordered_map<int, string> umap = unordered_map<int, string>({{1,"a"},{2,"b"}});  
+// 隐式调用构造函数，更简洁
+unordered_map<int, string> umap2({{3,"c"},{4,"d"}});	
+unordered_map<string, string> umap{
+    {"淘宝","https://www.taobao.com/"},
+    {"京东","https://www.jd.com/"},
+    {"天猫商城","https://jx.tmall.com/"} };
+
+// 拷贝构造函数 
+unordered_map<int, string> umap4(umap3);
+
+// 通过迭代器构造初始化
+unordered_map<int, string> umap5(umap1.begin(), umap1.end());
+
+// 拷贝初始化
+typedef std::unordered_map<std::string,std::string> stringmap;
+stringmap first = {{"AAPL","Apple"},{"MSFT","Microsoft"}};  // init list
+stringmap second = {{"GOOG","Google"},{"ORCL","Oracle"}};   // init list
+third = merge(first,second);                      // move
+first = third;                                    // copy
+```
 
 
 
+
+
+### Unordered_map 大小与判空
+
+```C++
+// 判空
+umap.empty();
+
+// 大小
+umap.size();
+```
+
+
+
+### Unordered_map 访问
+
+```c++
+// operator[]
+first["GOOG"] = "Google";		// new element inserted
+string brand1 = first["GOOG"];	// read
+
+// at
+unrdered_map<string,int> mymap = {
+    {"Mars", 3000},
+    {"Saturn", 60000},
+    {"Jupiter", 70000}};
+mymap.at("Mars") = 3396;
+mymap.at("Saturn") += 127;
+mymap.at("Jupiter") = mymap.at("Saturn") + 9638;
+```
+
+
+
+### Unordered_map find 与 count
+
+-   find
+
+```c++
+// find
+iterator find ( const key_type& k );
+const_iterator find ( const key_type& k ) const;
+
+// example
+std::unordered_map<std::string,double> mymap1 = {
+	    {"mom",5.4},
+	    {"dad",6.1},
+	    {"bro",5.9} };
+string person = "dad";
+// iterator
+// unordered_map<string,double>::const_iterator
+unordered_map<std::string,double>::const_iterator got = mymap1.find(person);
+if(got == mymap1.end()){
+    cout << "not found" << endl;
+}else{
+    cout << got->first << " is " << got->second << endl; 
+}
+
+```
+
+
+
+-   count
+
+```c++
+// count
+size_type count ( const key_type& k ) const;
+```
+
+
+
+### Unordered_map 修改
+
+-   插入
+    -   operator[]
+    -   emplace()
+    -   insert()
+
+```c++
+// 通过operator[]插入
+map_name [key_name] = value
+    
+// 通过emplace()插入
+std::unordered_map<std::string,std::string> mymap;
+mymap.emplace ("NCC-1701", "J.T. Kirk");
+mymap.emplace ("NCC-1701-D", "J.L. Picard");
+mymap.emplace ("NCC-74656", "K. Janeway");
+
+// 通过insert()插入
+unordered_map<string,double> myrecipe, mypantry = {{"milk",2.0},{"flour",1.5}};;					
+pair<string,double> myshopping ("baking powder",0.3);
+// copy insertion
+myrecipe.insert(myshopping);
+// range inseration
+myrecipe.insert(mypantry.begin(), mypantry.end());
+// initializer list inseration
+myrecipe.insert({{"sugar",0.8},{"salt",0.1},{"sugar",0.9}});		
+```
+
+
+
+-   删除 erase()
+    -   by key
+    -   by position
+    -   by range
+
+```c++
+// create map
+std::unordered_map<std::string,std::string> mymap3;
+mymap3["U.S."] = "Washington";
+mymap3["U.K."] = "London";
+mymap3["France"] = "Paris";
+mymap3["Russia"] = "Moscow";
+mymap3["China"] = "Beijing";
+mymap3["Germany"] = "Berlin";
+mymap3["Japan"] = "Tokyo";
+
+// 根据位置删除
+mymap3.erase(mymap3.begin());
+// 根据键值删除
+mymap3.erase("France");
+// 根据范围删除
+mymap3.erase(mymap3.find("Germany"), mymap3.end());
+```
+
+
+
+## STL 函数对象(仿函数)
+
+### 函数对象概念
+
+-   重载**函数调用操作符**的类，其对象常称为**函数对象**
+-   **函数对象**使用重载的()时，行为类似函数调用，也叫**仿函数**
+    -   函数对象(仿函数)是一个**类**，不是一个函数
+-   函数对象特点
+    -   函数对象在使用时，可以像普通函数那样调用, 可以有参数，可以有返回值
+    -   函数对象超出普通函数的概念，函数对象可以有自己的状态
+    -   函数对象可以作为参数传递
+
+```c++
+#include <string>
+
+//1、函数对象在使用时，可以像普通函数那样调用, 可以有参数，可以有返回值
+class MyAdd
+{
+public :
+	int operator()(int v1,int v2)
+	{
+		return v1 + v2;
+	}
+};
+
+void test01()
+{
+	MyAdd myAdd;
+	cout << myAdd(10, 10) << endl;
+}
+
+//2、函数对象可以有自己的状态
+class MyPrint
+{
+public:
+	MyPrint()
+	{
+		count = 0;
+	}
+	void operator()(string test)
+	{
+		cout << test << endl;
+		count++; //统计使用次数
+	}
+
+	int count; //内部自己的状态
+};
+void test02()
+{
+	MyPrint myPrint;
+	myPrint("hello world");
+	myPrint("hello world");
+	myPrint("hello world");
+	cout << "myPrint调用次数为： " << myPrint.count << endl;
+}
+
+//3、函数对象可以作为参数传递
+void doPrint(MyPrint &mp , string test)
+{
+	mp(test);
+}
+
+void test03()
+{
+	MyPrint myPrint;
+	doPrint(myPrint, "Hello C++");
+}
+
+int main() {
+
+	//test01();
+	//test02();
+	test03();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+### 函数对象-谓词
+
+* 返回bool类型的仿函数称为**谓词**
+
+* 如果operator()接受一个参数，那么叫做**一元谓词**
+
+    * ```c++
+        #include <vector>
+        #include <algorithm>
+        
+        //1.一元谓词
+        struct GreaterFive{
+        	bool operator()(int val) {
+        		return val > 5;
+        	}
+        };
+        
+        void test01() {
+        
+        	vector<int> v;
+        	for (int i = 0; i < 10; i++)
+        	{
+        		v.push_back(i);
+        	}
+        
+        	vector<int>::iterator it = find_if(v.begin(), v.end(), GreaterFive());
+        	if (it == v.end()) {
+        		cout << "没找到!" << endl;
+        	}
+        	else {
+        		cout << "找到:" << *it << endl;
+        	}
+        
+        }
+        
+        int main() {
+        
+        	test01();
+        
+        	system("pause");
+        
+        	return 0;
+        }
+        ```
+
+        
+
+* 如果operator()接受两个参数，那么叫做**二元谓词**
+
+    * ```c++
+        #include <vector>
+        #include <algorithm>
+        //二元谓词
+        class MyCompare
+        {
+        public:
+        	bool operator()(int num1, int num2)
+        	{
+        		return num1 > num2;
+        	}
+        };
+        
+        void test01()
+        {
+        	vector<int> v;
+        	v.push_back(10);
+        	v.push_back(40);
+        	v.push_back(20);
+        	v.push_back(30);
+        	v.push_back(50);
+        
+        	//默认从小到大
+        	sort(v.begin(), v.end());
+        	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+        	{
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        	cout << "----------------------------" << endl;
+        
+        	//使用函数对象改变算法策略，排序从大到小
+        	sort(v.begin(), v.end(), MyCompare());
+        	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+        	{
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        }
+        
+        int main() {
+        
+        	test01();
+        
+        	system("pause");
+        
+        	return 0;
+        }
+        ```
+
+        
+
+
+
+
+
+### STL 内建函数对象
+
+-   STL内建了一些函数对象,这些仿函数所产生的对象，用法和一般函数完全相同
+    -   算术仿函数
+    -   关系仿函数
+
+    -   逻辑仿函数
+-   使用内建函数对象，需要引入头文件 `#include<functional>`
+
+-   算术仿函数
+
+    -   `template<class T> T plus<T>`                //加法仿函数
+
+    -   `template<class T> T minus<T>`              //减法仿函数
+
+    -   `template<class T> T multiplies<T>`    //乘法仿函数
+
+    -   `template<class T> T divides<T>`         //除法仿函数
+
+    -   `template<class T> T modulus<T>`         //取模仿函数
+
+    -   `template<class T> T negate<T>`           //取反仿函数
+
+    -   ```c++
+        /**
+        example
+        **/
+            
+        #include <functional>
+        //negate
+        void test01()
+        {
+        	negate<int> n;
+        	cout << n(50) << endl;
+        }
+        
+        //plus
+        void test02()
+        {
+        	plus<int> p;
+        	cout << p(10, 20) << endl;
+        }
+        
+        int main() {
+        
+        	test01();
+        	test02();
+        
+        	system("pause");
+        
+        	return 0;
+        }
+        ```
+
+        
+
+-   关系仿函数
+
+    -   `template<class T> bool equal_to<T>`                    //等于
+
+    * `template<class T> bool not_equal_to<T>`            //不等于
+    * `template<class T> bool greater<T>`                      //大于
+    * `template<class T> bool greater_equal<T>`          //大于等于
+    * `template<class T> bool less<T>`                           //小于
+    -   `template<class T> bool less_equal<T>`               //小于等于
+
+    -   ```c++
+        #include <functional>
+        #include <vector>
+        #include <algorithm>
+        
+        class MyCompare
+        {
+        public:
+        	bool operator()(int v1,int v2)
+        	{
+        		return v1 > v2;
+        	}
+        };
+        void test01()
+        {
+        	vector<int> v;
+        
+        	v.push_back(10);
+        	v.push_back(30);
+        	v.push_back(50);
+        	v.push_back(40);
+        	v.push_back(20);
+        
+        	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        
+        	//自己实现仿函数
+        	//sort(v.begin(), v.end(), MyCompare());
+        	//STL内建仿函数  大于仿函数
+        	sort(v.begin(), v.end(), greater<int>());
+        
+        	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        }
+        
+        int main() {
+        
+        	test01();
+        
+        	system("pause");
+        
+        	return 0;
+        }
+        ```
+
+        
+
+-   逻辑仿函数
+
+    -   `template<class T> bool logical_and<T>`              //逻辑与
+
+    -   `template<class T> bool logical_or<T>`                //逻辑或
+
+    -   `template<class T> bool logical_not<T>`              //逻辑非
+
+    -   ```c++
+        #include <vector>
+        #include <functional>
+        #include <algorithm>
+        void test01()
+        {
+        	vector<bool> v;
+        	v.push_back(true);
+        	v.push_back(false);
+        	v.push_back(true);
+        	v.push_back(false);
+        
+        	for (vector<bool>::iterator it = v.begin();it!= v.end();it++)
+        	{
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        
+        	//逻辑非  将v容器搬运到v2中，并执行逻辑非运算
+        	vector<bool> v2;
+        	v2.resize(v.size());
+        	transform(v.begin(), v.end(),  v2.begin(), logical_not<bool>());
+        	for (vector<bool>::iterator it = v2.begin(); it != v2.end(); it++)
+        	{
+        		cout << *it << " ";
+        	}
+        	cout << endl;
+        }
+        
+        int main() {
+        
+        	test01();
+        
+        	system("pause");
+        
+        	return 0;
+        }
+        ```
+
+        
+
+
+
+## STL 常用算法
+
+* 算法主要是由头文件`<algorithm>` `<functional>` `<numeric>`组成。
+
+* `<algorithm>`是所有STL头文件中最大的一个，范围涉及到比较、 交换、查找、遍历操作、复制、修改等等
+* `<numeric>`体积很小，只包括几个在序列上面进行简单数学运算的模板函数
+* `<functional>`定义了一些模板类,用以声明函数对象。
+
+
+
+
+
+### STL 常用遍历算法
+
+#### `for_each`     //遍历容器
+
+* 实现遍历容器
+* for_each(iterator beg, iterator end, _func);
+    * // 遍历算法 遍历容器元素
+    * // beg 开始迭代器
+    * // end 结束迭代器
+    * // _func 函数或者函数对象
+
+```c++
+#include <algorithm>
+#include <vector>
+
+//普通函数
+void print01(int val) 
+{
+	cout << val << " ";
+}
+//函数对象
+class print02 
+{
+ public:
+	void operator()(int val) 
+	{
+		cout << val << " ";
+	}
+};
+
+//for_each算法基本用法
+void test01() {
+
+	vector<int> v;
+	for (int i = 0; i < 10; i++) 
+	{
+		v.push_back(i);
+	}
+
+	//遍历算法
+	for_each(v.begin(), v.end(), print01);
+	cout << endl;
+
+	for_each(v.begin(), v.end(), print02());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### `transform`   //搬运容器到另一个容器中
+
+* 搬运容器到另一个容器中
+* `transform(iterator beg1, iterator end1, iterator beg2, _func);`
+    * //beg1 源容器开始迭代器
+    * //end1 源容器结束迭代器
+    * //beg2 目标容器开始迭代器
+    * //_func 函数或者函数对象
+
+```c++
+#include<vector>
+#include<algorithm>
+
+//常用遍历算法  搬运 transform
+
+class TransForm
+{
+public:
+	int operator()(int val)
+	{
+		return val;
+	}
+
+};
+
+class MyPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int>v;
+	for (int i = 0; i < 10; i++)
+	{
+		v.push_back(i);
+	}
+
+	vector<int>vTarget; //目标容器
+
+	vTarget.resize(v.size()); // 目标容器需要提前开辟空间
+
+	transform(v.begin(), v.end(), vTarget.begin(), TransForm());
+
+	for_each(vTarget.begin(), vTarget.end(), MyPrint());
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+### STL 常用查找算法
+
+-   常用查找算法
+    -   `find`                     //查找元素
+    -   `find_if`               //按条件查找元素
+    -   `adjacent_find`    //查找相邻重复元素
+    -   `binary_search`    //二分查找法
+    -   `count`                   //统计元素个数
+    -   `count_if`             //按条件统计元素个数
+
+
+
+#### find
+
+-   查找指定元素，找到返回指定元素的迭代器，找不到返回结束迭代器end()
+
+-   `find(iterator beg, iterator end, value);  `
+
+    -   // 按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+    -   // value 查找的元素
+
+-   ```c++
+    #include <algorithm>
+    #include <vector>
+    #include <string>
+    void test01() {
+    
+    	vector<int> v;
+    	for (int i = 0; i < 10; i++) {
+    		v.push_back(i + 1);
+    	}
+    	//查找容器中是否有 5 这个元素
+    	vector<int>::iterator it = find(v.begin(), v.end(), 5);
+    	if (it == v.end()) 
+    	{
+    		cout << "没有找到!" << endl;
+    	}
+    	else 
+    	{
+    		cout << "找到:" << *it << endl;
+    	}
+    }
+    
+    class Person {
+    public:
+    	Person(string name, int age) 
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    	//重载==
+    	bool operator==(const Person& p) 
+    	{
+    		if (this->m_Name == p.m_Name && this->m_Age == p.m_Age) 
+    		{
+    			return true;
+    		}
+    		return false;
+    	}
+    
+    public:
+    	string m_Name;
+    	int m_Age;
+    };
+    
+    void test02() {
+    
+    	vector<Person> v;
+    
+    	//创建数据
+    	Person p1("aaa", 10);
+    	Person p2("bbb", 20);
+    	Person p3("ccc", 30);
+    	Person p4("ddd", 40);
+    
+    	v.push_back(p1);
+    	v.push_back(p2);
+    	v.push_back(p3);
+    	v.push_back(p4);
+    
+    	vector<Person>::iterator it = find(v.begin(), v.end(), p2);
+    	if (it == v.end()) 
+    	{
+    		cout << "没有找到!" << endl;
+    	}
+    	else 
+    	{
+    		cout << "找到姓名:" << it->m_Name << " 年龄: " << it->m_Age << endl;
+    	}
+    }
+    ```
+
+    
+
+#### find_if
+
+-   按条件查找元素
+-   `find_if(iterator beg, iterator end, _Pred);  `
+    -   // 按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+    -   // _Pred 函数或者谓词（返回bool类型的仿函数）
+
+```c++
+#include <algorithm>
+#include <vector>
+#include <string>
+
+//内置数据类型
+class GreaterFive
+{
+public:
+	bool operator()(int val)
+	{
+		return val > 5;
+	}
+};
+
+void test01() {
+
+	vector<int> v;
+	for (int i = 0; i < 10; i++) {
+		v.push_back(i + 1);
+	}
+
+	vector<int>::iterator it = find_if(v.begin(), v.end(), GreaterFive());
+	if (it == v.end()) {
+		cout << "没有找到!" << endl;
+	}
+	else {
+		cout << "找到大于5的数字:" << *it << endl;
+	}
+}
+
+//自定义数据类型
+class Person {
+public:
+	Person(string name, int age)
+	{
+		this->m_Name = name;
+		this->m_Age = age;
+	}
+public:
+	string m_Name;
+	int m_Age;
+};
+
+class Greater20
+{
+public:
+	bool operator()(Person &p)
+	{
+		return p.m_Age > 20;
+	}
+
+};
+
+void test02() {
+
+	vector<Person> v;
+
+	//创建数据
+	Person p1("aaa", 10);
+	Person p2("bbb", 20);
+	Person p3("ccc", 30);
+	Person p4("ddd", 40);
+
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+
+	vector<Person>::iterator it = find_if(v.begin(), v.end(), Greater20());
+	if (it == v.end())
+	{
+		cout << "没有找到!" << endl;
+	}
+	else
+	{
+		cout << "找到姓名:" << it->m_Name << " 年龄: " << it->m_Age << endl;
+	}
+}
+
+int main() {
+
+	//test01();
+
+	test02();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### adjacent_find
+
+-   查找相邻重复元素
+-   `adjacent_find(iterator beg, iterator end);  `
+    -   // 查找相邻重复元素,返回相邻元素的第一个位置的迭代器
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+
+```c++
+#include <algorithm>
+#include <vector>
+
+void test01()
+{
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(5);
+	v.push_back(2);
+	v.push_back(4);
+	v.push_back(4);
+	v.push_back(3);
+
+	//查找相邻重复元素
+	vector<int>::iterator it = adjacent_find(v.begin(), v.end());
+	if (it == v.end()) {
+		cout << "找不到!" << endl;
+	}
+	else {
+		cout << "找到相邻重复元素为:" << *it << endl;
+	}
+}
+```
+
+
+
+#### binary_search
+
+-   查找指定元素是否存在
+-   `bool binary_search(iterator beg, iterator end, value);  `
+    -   // 查找指定的元素，查到 返回true  否则false
+    -   // 注意: 在**无序序列中不可用**
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+    -   // value 查找的元素
+
+```c++
+#include <algorithm>
+#include <vector>
+
+void test01()
+{
+	vector<int>v;
+
+	for (int i = 0; i < 10; i++)
+	{
+		v.push_back(i);
+	}
+	//二分查找
+	bool ret = binary_search(v.begin(), v.end(),2);
+	if (ret)
+	{
+		cout << "找到了" << endl;
+	}
+	else
+	{
+		cout << "未找到" << endl;
+	}
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### count
+
+-   统计元素个数
+-   `count(iterator beg, iterator end, value);  `
+    -   // 统计元素出现次数
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+    -   // value 统计的元素
+
+```c++
+#include <algorithm>
+#include <vector>
+
+//内置数据类型
+void test01()
+{
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(4);
+	v.push_back(5);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(4);
+
+	int num = count(v.begin(), v.end(), 4);
+
+	cout << "4的个数为： " << num << endl;
+}
+
+//自定义数据类型
+class Person
+{
+public:
+	Person(string name, int age)
+	{
+		this->m_Name = name;
+		this->m_Age = age;
+	}
+	bool operator==(const Person & p)
+	{
+		if (this->m_Age == p.m_Age)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	string m_Name;
+	int m_Age;
+};
+
+void test02()
+{
+	vector<Person> v;
+
+	Person p1("刘备", 35);
+	Person p2("关羽", 35);
+	Person p3("张飞", 35);
+	Person p4("赵云", 30);
+	Person p5("曹操", 25);
+
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+	v.push_back(p5);
+    
+    Person p("诸葛亮",35);
+
+	int num = count(v.begin(), v.end(), p);
+	cout << "num = " << num << endl;
+}
+int main() {
+
+	//test01();
+
+	test02();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### count_if
+
+-   按条件统计元素个数
+-   `count_if(iterator beg, iterator end, _Pred);  `
+    -   // 按条件统计元素出现次数
+    -   // beg 开始迭代器
+    -   // end 结束迭代器
+    -   // _Pred 谓词
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class Greater4
+{
+public:
+	bool operator()(int val)
+	{
+		return val >= 4;
+	}
+};
+
+//内置数据类型
+void test01()
+{
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(4);
+	v.push_back(5);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(4);
+
+	int num = count_if(v.begin(), v.end(), Greater4());
+
+	cout << "大于4的个数为： " << num << endl;
+}
+
+//自定义数据类型
+class Person
+{
+public:
+	Person(string name, int age)
+	{
+		this->m_Name = name;
+		this->m_Age = age;
+	}
+
+	string m_Name;
+	int m_Age;
+};
+
+class AgeLess35
+{
+public:
+	bool operator()(const Person &p)
+	{
+		return p.m_Age < 35;
+	}
+};
+void test02()
+{
+	vector<Person> v;
+
+	Person p1("刘备", 35);
+	Person p2("关羽", 35);
+	Person p3("张飞", 35);
+	Person p4("赵云", 30);
+	Person p5("曹操", 25);
+
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+	v.push_back(p5);
+
+	int num = count_if(v.begin(), v.end(), AgeLess35());
+	cout << "小于35岁的个数：" << num << endl;
+}
+
+
+int main() {
+
+	//test01();
+
+	test02();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+### STL 常用排序算法
+
+### STL 常用拷贝和替换算法
+
+### STL 常用算术生成算法
+
+### STL 常用集合算法
