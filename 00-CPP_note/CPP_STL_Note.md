@@ -964,7 +964,7 @@ unordered_set<int> set4(arr,arr+5);
 // 移动构造
 unordered_set<int> set5(move(set2));
 
-// 使用处置列表进行构造
+// 使用初始列表进行构造
 unordered_set<int> set6 {1,2,10,10};
 ```
 
