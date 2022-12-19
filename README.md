@@ -1,3 +1,4 @@
 # CPP_Learning
 
-本Repo用于CPP自学
+CPP 学习Repo
+
