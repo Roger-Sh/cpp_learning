@@ -1,6 +1,3 @@
-*.bak
-.vscode
-
 # cmake related
 devel/
 logs/
