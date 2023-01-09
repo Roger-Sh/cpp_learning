@@ -1,20 +1,16 @@
 #include <iostream>
-using namespace std;
 
 int main() {
-    while (true)
-    {
-        cout << "Hello World" << endl;
-        char ch = getchar();
-
-        cout << ch << endl;
-
-        if(ch == 'q')
-        {
+    std::cout << "please enter a string" << std::endl;
+    std::string str;
+    while (std::getline(std::cin, str)) {
+        if (str[0] == 'q') {
+            std::cout << "quit" << std::endl;
             break;
+        } else {
+            std::cout << str << std::endl;
         }
     }
-    
 
     return 0;
 }

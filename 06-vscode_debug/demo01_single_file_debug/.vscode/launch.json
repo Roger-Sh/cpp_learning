@@ -7,13 +7,13 @@
         {
             "name": "(gdb) 启动", // 配置名称
             "type": "cppdbg", // 配置类型
+            "cwd": "${fileDirname}",// 项目目录
             "request": "launch", // launch or attach
             "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}",//调试程序的路径
             "args": [],// 传递给程序的命令行参数，一般为空
             "stopAtEntry": false,// 调试器是否在目标的入口点停止，
-            "cwd": "${fileDirname}",// 项目目录
             "environment": [],
-            "externalConsole": true,// 调试时是否显示控制台窗口，一般为true显示控制台
+            "externalConsole": false,// 调试时是否显示控制台窗口，一般为true显示控制台
             "MIMode": "gdb",// 指定连接的调试器
             "preLaunchTask": "build", // 每次调试之前会自动进行build
             "setupCommands": [
