@@ -2,7 +2,19 @@
 using namespace std;
 
 int main() {
-    cout << "Hello World" << endl;
-    getchar();
+    while (true)
+    {
+        cout << "Hello World" << endl;
+        char ch = getchar();
+
+        cout << ch << endl;
+
+        if(ch == 'q')
+        {
+            break;
+        }
+    }
+    
+
     return 0;
 }
