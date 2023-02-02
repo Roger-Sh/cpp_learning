@@ -27,7 +27,7 @@ void Person::SetTelNum(const std::string &tel_num) {
 }
 
 void Person::ShowPersonInfo() {
-    std::cout <<"===================================" << std::endl;
+    std::cout << "===================================" << std::endl;
     std::cout << "name: " << this->name_ << std::endl;
     std::cout << "age: " << this->age_ << std::endl;
     std::cout << "tel: " << this->tel_num_ << std::endl;
@@ -47,6 +47,29 @@ inline bool Quit() {
     }
 }
 
+void func(
+    const std::string verylongggggggggggggggggggggggggggg_param1,
+    const std::string verylongggggggggggggggggggggggggggg_param2,
+    int n,
+    int i,
+    int k,
+    int laksjdlkajsldjla
+) {
+    std::cout << verylongggggggggggggggggggggggggggg_param1;
+}
+
+void func2(
+    const std::string verylongggggggggggggggggggggggggggg_param1,
+    int a,
+    int b,
+    int c,
+    int d,
+    int e,
+    int f
+) {
+    std::cout << a;
+}
+
 int main() {
     Person p1("xiaoming", 10, "13345678901");
     p1.ShowPersonInfo();
@@ -61,8 +84,7 @@ int main() {
 
     int age = 12;
     while (true) {
-        if(Quit())
-        {
+        if (Quit()) {
             break;
         }
 
