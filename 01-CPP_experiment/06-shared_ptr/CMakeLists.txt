@@ -1,0 +1,12 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+PROJECT(test_shared_ptr)
+SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
+INCLUDE_DIRECTORIES(
+include
+)
+
+# multithread_demo
+ADD_EXECUTABLE(test_shared_ptr src/test_shared_ptr.cpp)
+# TARGET_LINK_LIBRARIES(test_shared_ptr)
