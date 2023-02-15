@@ -1,3 +1,7 @@
+# vscode related
+.vscode
+
+
 # cmake related
 devel/
 logs/
