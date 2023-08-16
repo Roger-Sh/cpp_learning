@@ -5,7 +5,7 @@
 ## STL 基本概念
 
 - STL - Standard Template Library
-- STL 分为
+- STL 分为六大组件
   - 容器，container
     - 序列式容器
       - 强调排序， 每个元素有固定位置
@@ -31,10 +31,15 @@
       - find
       - copy
       - for_each
-      - ...
   - 迭代器，iterator
     - 容器和算法之间的胶合器
     - 依序寻访某个容器所含的各个元素，而又无需暴露该容器的内部表示方式
+    - 迭代器种类
+        - 输入迭代器：对数据的只读访问
+        - 输出迭代器：对数据的只写访问
+        - 前向迭代器：读写操作，并能向前推进迭代器
+        - 双向迭代器：读写操作，并能向前和向后操作
+        - 随机访问迭代器：读写操作，可以以跳跃的方式访问任意数据，功能最强的迭代器
   - 仿函数
     - 行为类似函数， 算法的策略
   - 适配器
@@ -44,9 +49,11 @@
 
 
 
-## String
+## STL 容器
 
-### string 构造函数
+### String
+
+#### string 构造函数
 
 ```c++
 // 创建空的字符串
@@ -64,7 +71,7 @@ std::string s4(10, 'a');
 
 ```
 
-### string 赋值
+#### string 赋值
 
 ```c++
 // operator =
@@ -79,7 +86,7 @@ string& assign(const string &s);	// 字符串s
 string& assign(int n, char c);	// n个字符c
 ```
 
-### string 拼接
+#### string 拼接
 
 ```c++
 // operator +=
@@ -94,7 +101,7 @@ string& append(const string &s);
 string& append(const string &s, int pos, int n);
 ```
 
-### stirng 查找与替换
+#### stirng 查找与替换
 
 ```c++
 // method find() 查找 *****************************
@@ -125,7 +132,7 @@ string& replace(int pos, int n,const char* s);
 
 ```
 
-### string 比较
+#### string 比较
 
 ```c++
 // method compare()
@@ -134,14 +141,14 @@ int compare(const string &s) const;      //与字符串s比较
 int compare(const char *s) const;     //与字符串s比较
 ```
 
-### string 字符存取
+#### string 字符存取
 
 ```c++
 char& operator[](int n);     //通过[]方式取字符
 char& at(int n);                     //通过at方法获取字符
 ```
 
-### string 插入和删除
+#### string 插入和删除
 
 ```c++
 string& insert(int pos, const char* s);                 //插入字符串
@@ -150,7 +157,7 @@ string& insert(int pos, int n, char c);                //在指定位置插入n�
 string& erase(int pos, int n = npos);                    //删除从Pos开始的n个字符 
 ```
 
-### string 子串
+#### string 子串
 
 ```c++
 string substr(int pos = 0, int n = npos) const;   //返回由pos开始的n个字符组成的字符串
@@ -158,13 +165,9 @@ string substr(int pos = 0, int n = npos) const;   //返回由pos开始的n个字
 
 
 
+### Vector
 
-
-
-
-## Vector
-
-### Vector 构造
+#### Vector 构造
 
 ```c++
 vector<T> v;                		     //采用模板实现类实现，默认构造函数
@@ -173,9 +176,7 @@ vector(n, elem);                            //构造函数将n个elem拷贝给�
 vector(const vector &vec);         //拷贝构造函数。
 ```
 
-
-
-### Vector 赋值
+#### Vector 赋值
 
 ```c++
 vector& operator=(const vector &vec);	//重载等号操作符
@@ -183,9 +184,7 @@ assign(beg, end);       //将[beg, end)区间中的数据拷贝赋值给本身�
 assign(n, elem);        //将n个elem拷贝赋值给本身。
 ```
 
-
-
-### Vector 容量与大小
+#### Vector 容量与大小
 
 ```c++
 //判断容器是否为空
@@ -206,9 +205,7 @@ resize(int num);
 resize(int num, elem);`  
 ```
 
-
-
-### Vector 插入与删除
+#### Vector 插入与删除
 
 ```c++
 push_back(ele);                                         //尾部插入元素ele
@@ -220,9 +217,7 @@ erase(const_iterator start, const_iterator end);//删除迭代器从start到end�
 clear();                                                        //删除容器中所有元素
 ```
 
-
-
-### Vector 数据存取
+#### Vector 数据存取
 
 ```c++
 at(int idx);     //返回索引idx所指的数据
@@ -231,17 +226,13 @@ front();            //返回容器中第一个数据元素
 back();              //返回容器中最后一个数据元素
 ```
 
-
-
-### Vector 互换容器
+#### Vector 互换容器
 
 ```c++
 swap(vec);  // 将vec与本身的元素互换
 ```
 
-
-
-### Vector 预留空间
+#### Vector 预留空间
 
 ```c++
 reserve(int len); //容器预留len个元素长度，预留位置不初始化，元素不可访问。
@@ -249,9 +240,9 @@ reserve(int len); //容器预留len个元素长度，预留位置不初始化，
 
 
 
-## Deque
+### Deque
 
-### Deque 特点
+#### Deque 特点
 
 - 双端数组，可以对头端进行插入删除操作
 - Deque 与 Vector 对比
@@ -262,7 +253,7 @@ reserve(int len); //容器预留len个元素长度，预留位置不初始化，
 - Deque 原理
   - deque内部有个**中控器**，维护每段缓冲区中的内容，缓冲区中存放真实数据，中控器维护的是每个缓冲区的地址，使得使用deque时像一片连续的内存空间
 
-### Deque 构造
+#### Deque 构造
 
 ```c++
 deque<T> deqT;                      //默认构造形式
@@ -271,9 +262,7 @@ deque(n, elem);                    //构造函数将n个elem拷贝给本身。
 deque(const deque &deq);   //拷贝构造函数
 ```
 
-
-
-### Deque 赋值
+#### Deque 赋值
 
 ```c++
 deque& operator=(const deque &deq);          //重载等号操作符
@@ -281,9 +270,7 @@ assign(beg, end);                                           //将[beg, end)区�
 assign(n, elem);                                             //将n个elem拷贝赋值给本身。
 ```
 
-
-
-### Deque 大小
+#### Deque 大小
 
 ```c++
 //判断容器是否为空
@@ -301,9 +288,7 @@ deque.resize(num);
 deque.resize(num, elem);     
 ```
 
-
-
-### Deque 插入与删除
+#### Deque 插入与删除
 
 - 两端插入操作
 
@@ -313,8 +298,6 @@ deque.resize(num, elem);
   pop_back();                   //删除容器最后一个数据
   pop_front();                 //删除容器第一个数据
   ```
-
-  
 
 - 指定位置操作
 
@@ -333,9 +316,8 @@ deque.resize(num, elem);
   erase(pos);                   
   ```
 
-  
 
-### Deque 数据存取
+#### Deque 数据存取
 
 ```c++
 at(int idx);     	//返回索引idx所指的数据
@@ -344,9 +326,7 @@ front();    		//返回容器中第一个数据元素
 back();        		//返回容器中最后一个数据元素
 ```
 
-
-
-### Deque 排序
+#### Deque 排序
 
 ```c++
 sort(iterator beg, iterator end)  //对beg和end区间内元素进行排序
@@ -354,21 +334,23 @@ sort(iterator beg, iterator end)  //对beg和end区间内元素进行排序
 
 
 
-## Stack
+### Stack
 
-### Stack 特点
+#### Stack 特点
 
-stack是一种**先进后出**(First In Last Out,FILO)的数据结构，它只有一个出口
-
-栈中只有顶端的元素才可以被外界使用，因此栈不允许有遍历行为
-
-栈中进入数据称为  --- **入栈**  `push`
-
-栈中弹出数据称为  --- **出栈**  `pop`
+-   stack是一种**先进后出**(First In Last Out,FILO)的数据结构，它只有一个出口
 
 
+-   栈中只有顶端的元素才可以被外界使用，因此栈不允许有遍历行为
 
-### Stack 构造
+
+-   栈中进入数据称为  --- **入栈**  `push`
+
+
+-   栈中弹出数据称为  --- **出栈**  `pop`
+
+
+#### Stack 构造
 
 ```c++
 // 默认构造函数
@@ -378,17 +360,13 @@ stack<T> stk;
 stack(const stack &stk);
 ```
 
-
-
-### Stack 赋值
+#### Stack 赋值
 
 ```c++
 stack& operator=(const stack &stk);
 ```
 
-
-
-### Stack 存取
+#### Stack 存取
 
 ```c++
 // 栈顶添加元素
@@ -401,9 +379,7 @@ stk.pop();
 stk.top();
 ```
 
-
-
-### Stack 大小
+#### Stack 大小
 
 ```c++
 stk.empty();
@@ -412,29 +388,26 @@ stk.size();
 
  
 
+### Queue
+
+#### Queue 特点
+
+-   Queue是一种**先进先出**(First In First Out,FIFO)的数据结构，它有两个出口
 
 
+-   队列容器允许从一端新增元素，从另一端移除元素
 
 
+-   队列中只有队头和队尾才可以被外界使用，因此队列不允许有遍历行为
 
 
-## Queue
-
-### Queue 特点
-
-Queue是一种**先进先出**(First In First Out,FIFO)的数据结构，它有两个出口
-
-队列容器允许从一端新增元素，从另一端移除元素
-
-队列中只有队头和队尾才可以被外界使用，因此队列不允许有遍历行为
-
-队列中进数据称为 --- **入队**    `push`
-
-队列中出数据称为 --- **出队**    `pop`
+-   队列中进数据称为 --- **入队**    `push`
 
 
+-   队列中出数据称为 --- **出队**    `pop`
 
-### Queue 构造
+
+#### Queue 构造
 
 ```c++
 // 默认构造
@@ -444,17 +417,13 @@ queue<T> que;
 queue(const queue &que);
 ```
 
-
-
-### Queue 赋值
+#### Queue 赋值
 
 ```c++
 queue& operator=(const queue &que);
 ```
 
-
-
-### Queue 存取
+#### Queue 存取
 
 ```c++
 // 队尾添加元素
@@ -470,9 +439,7 @@ que.back();
 que.front();
 ```
 
-
-
-### Queue 大小
+#### Queue 大小
 
 ```c++
 que.empty();
@@ -481,9 +448,9 @@ que.size();
 
 
 
-## List
+### List
 
-### List 特点
+#### List 特点
 
 -   **功能：**将数据进行链式存储
 
@@ -491,11 +458,9 @@ que.size();
 
     -   链表的组成：链表由一系列**结点**组成
 
+-   结点的组成：一个是存储数据元素的**数据域**，另一个是存储下一个结点地址的**指针域**
 
-    -   结点的组成：一个是存储数据元素的**数据域**，另一个是存储下一个结点地址的**指针域**
-
-
-    -   STL中的链表是一个双向循环链表
+-   STL中的链表是一个双向循环链表
 
 -   List有一个重要的性质，插入操作和删除操作都不会造成原有list迭代器的失效，这在vector是不成立的。
 
@@ -510,11 +475,7 @@ que.size();
 
     * 链表灵活，但是空间(指针域) 和 时间（遍历）额外耗费较大
 
-
-
-
-
-### List 构造
+#### List 构造
 
 ```c++
 // list采用采用模板类实现,对象的默认构造形式
@@ -530,9 +491,7 @@ list(n,elem);
 list(const list &lst);
 ```
 
-
-
-### List 赋值和交换
+#### List 赋值和交换
 
 ```c++
 // 将[beg, end)区间中的数据拷贝赋值给本身。
@@ -548,9 +507,7 @@ list& operator=(const list &lst);
 swap(lst);
 ```
 
-
-
-### List 大小
+#### List 大小
 
 ```c++
 // 返回容器中元素的个数
@@ -569,9 +526,7 @@ resize(num, elem);
 
 ```
 
-
-
-### List 插入和删除
+#### List 插入和删除
 
 ```c++
 // 在容器尾部加入一个元素
@@ -608,9 +563,7 @@ erase(pos);
 remove(elem);
 ```
 
-
-
-### List 数据存取
+#### List 数据存取
 
 ```c++
 // 获取第一个元素
@@ -620,21 +573,25 @@ front();
 back();
 ```
 
+#### List 反转和排序
 
-
-### List 反转和排序
+-   反转
 
 ```c++
 // 反转链表
 reerse();
+```
 
+-   排序
+
+```c++
 // 排序, 默认从小到达
 // 可以指定排序规则
 // 自定义数据类型必须指定排序规则
 sort();
 ```
 
-
+-   自定义排序
 
 ```c++
 /**
@@ -718,9 +675,9 @@ int main()
 
 
 
-## Set/Multiset
+### Set/Multiset
 
-### Set 特点
+#### Set 特点
 
 -   set/multiset属于**关联式容器**，底层结构是用**二叉树**实现。
 
@@ -732,9 +689,8 @@ int main()
 
     * multiset允许容器中有重复的元素
 
-        
 
-### Set 构造与赋值
+#### Set 构造与赋值
 
 ```c++
 // 默认构造函数：
@@ -747,9 +703,7 @@ set(const set &st);
 set& operator=(const set &st);
 ```
 
-
-
-### Set 大小与交换
+#### Set 大小与交换
 
 ```c++
 // 返回容器中元素的数目
@@ -762,9 +716,7 @@ empty();
 swap(st);
 ```
 
-
-
-### Set 插入与删除
+#### Set 插入与删除
 
 ```c++
 // 在容器中插入元素。
@@ -783,9 +735,7 @@ erase(beg, end);
 erase(elem);
 ```
 
-
-
-### Set 查找与统计
+#### Set 查找与统计
 
 ```c++
 // 查找key是否存在,若存在，返回该键的元素的迭代器；若不存在，返回set.end();
@@ -795,17 +745,13 @@ find(key);
 count(key);
 ```
 
-
-
-### Set 与Multiset 区别
+#### Set 与Multiset 区别
 
 * set不可以插入重复数据，而multiset可以
 * set插入数据的同时会返回插入结果，表示插入是否成功
 * multiset不会检测数据，因此可以插入重复数据
 
-
-
-### Set 排序 
+#### Set 排序 
 
 -   set容器默认排序规则为从小到大
 -   利用仿函数，可以改变排序规则
@@ -934,9 +880,9 @@ int main() {
 
 
 
-## Unordered_set
+### Unordered_set
 
-### Unordered_set 特点
+#### Unordered_set 特点
 
 -   unordered_set 容器，可直译为“无序 set 容器”。即 unordered_set 容器和 set 容器很像，唯一的区别就在于 set 容器会自行对存储的数据进行排序，而 unordered_set 容器不会。
 
@@ -944,9 +890,7 @@ int main() {
 -   容器内部存储的各个元素的值都互不相等，且不能被修改；
 -   不会对内部存储的数据进行排序
 
-
-
-### Unordered_set 构造
+#### Unordered_set 构造
 
 ```c++
 // 创建空的set
@@ -968,9 +912,7 @@ unordered_set<int> set5(move(set2));
 unordered_set<int> set6 {1,2,10,10};
 ```
 
-
-
-### Unordered_set 判空, 查找, 计数, 清空
+#### Unordered_set 判空, 查找, 计数, 清空
 
 ```c++
 // 判断空
@@ -988,9 +930,7 @@ set1.count(2);
 set1.clear();
 ```
 
-
-
-### Unordered_set insert()/emplace()相关
+#### Unordered_set insert()/emplace()相关
 
 ```c++
 // insert()函数——插入元素
@@ -1025,9 +965,7 @@ words.insert({"ten", "seven", "six"});  // Inserting an initializer list
 set1.emplace(3);
 ```
 
-
-
-### Unordered_set erase() 相关
+#### Unordered_set erase() 相关
 
 ```c++
 // erase()函数——删除元素
@@ -1039,9 +977,7 @@ set1.erase(set1.find(1));
 set1.erase(set1.begin(), set1.end());
 ```
 
-
-
-### Unordered_set bucket 相关
+#### Unordered_set bucket 相关
 
 ```c++
 // 返回容器中的篮子总数
@@ -1062,15 +998,13 @@ set1.rehash(20);
 
 
 
-## Pair
+### Pair
 
-### Pair 特点
+#### Pair 特点
 
 pair是将2个数据组合成一组数据，当需要这样的需求时就可以使用pair，如stl中的map就是将key和value放在一起来保存。另一个应用是，当一个函数需要返回2个数据的时候，可以选择pair。 pair的实现是一个结构体，主要的两个成员变量是first second 因为是使用struct不是class，所以可以直接使用pair的成员变量。
 
-
-
-### Pair 构造与初始化
+#### Pair 构造与初始化
 
 ```c++
 //创建一个空的pair对象（使用默认构造），它的两个元素分别是T1和T2类型，采用值初始化。
@@ -1107,9 +1041,7 @@ pair<int, double> p3；
 p3 = p1;
 ```
 
-
-
-### Pair 操作
+#### Pair 操作
 
 ```c++
 // 两个pair对象间的小于运算，其定义遵循字典次序：如 p1.first < p2.first 或者 !(p2.first < p1.first) && (p1.second < p2.second) 则返回true。
@@ -1125,20 +1057,14 @@ p1.first;
 p1.second;
 ```
 
-
-
-### Pair 与 make_pair
+#### Pair 与 make_pair
 
 ```c++
 pair<int, double> p1;
 p1 = make_pair(1, 1.2);
 ```
 
-
-
-### 通过tie获取pair元素值
-
-
+#### 通过tie获取pair元素值
 
 ```c++
 /**
@@ -1165,9 +1091,9 @@ int main(int argc, char **argv)
 
 
 
-## Map/Multimap
+### Map/Multimap
 
-### Map 特点
+#### Map 特点
 
 -   map中所有元素都是pair
     -   map中所有元素都是成对出现，插入数据时候要使用对组
@@ -1179,9 +1105,7 @@ int main(int argc, char **argv)
     -   map不允许容器中有重复key值元素
     -   multimap允许容器中有重复key值元素
 
-
-
-### Map 构造与赋值
+#### Map 构造与赋值
 
 ```c++
 // map默认构造函数
@@ -1194,9 +1118,7 @@ map(const map &mp);
 map& operator=(const map &mp);
 ```
 
-
-
-### Map 大小与交换
+#### Map 大小与交换
 
 ```c++
 // 返回容器中元素的数目
@@ -1209,9 +1131,7 @@ map.empty();
 map.swap(st);
 ```
 
-
-
-### Map 插入与删除
+#### Map 插入与删除
 
 ```c++
 // 在容器中插入元素。
@@ -1237,9 +1157,7 @@ map.erase(beg, end);
 map.erase(key);
 ```
 
-
-
-### Map 查找与统计
+#### Map 查找与统计
 
 ```c++
 // 查找key是否存在,若存在，返回该键的元素的迭代器；若不存在，返回set.end();
@@ -1253,9 +1171,7 @@ else
 count(key);
 ```
 
-
-
-### Map 排序
+#### Map 排序
 
 -   map容器默认排序规则为 按照key值进行 从小到大排序
 -   利用仿函数，可以改变排序规则
@@ -1298,11 +1214,9 @@ int main() {
 
 
 
+### Unordered_map
 
-
-## Unordered_map
-
-### Unordered_map 特点
+#### Unordered_map 特点
 
 -   unordered_map是一种关联容器，存储基于键值和映射组成的元素，即key-value。允许基于键快速查找元素。在unordered_map中，键值唯一标识元素，映射的值是一个与该对象关联的内容的对象。
 -   Unordered_map 与 map 的对比
@@ -1323,9 +1237,7 @@ int main() {
     -   allocator-aware
         -   分配器对象来动态地处理它的存储需求
 
-
-
-### Unordered_map 构造与初始化
+#### Unordered_map 构造与初始化
 
 ```c++
 // 默认构造函数
@@ -1355,11 +1267,7 @@ third = merge(first,second);                      // move
 first = third;                                    // copy
 ```
 
-
-
-
-
-### Unordered_map 大小与判空
+#### Unordered_map 大小与判空
 
 ```C++
 // 判空
@@ -1369,9 +1277,7 @@ umap.empty();
 umap.size();
 ```
 
-
-
-### Unordered_map 访问
+#### Unordered_map 访问
 
 ```c++
 // operator[]
@@ -1388,9 +1294,7 @@ mymap.at("Saturn") += 127;
 mymap.at("Jupiter") = mymap.at("Saturn") + 9638;
 ```
 
-
-
-### Unordered_map find 与 count
+#### Unordered_map find 与 count
 
 -   find
 
@@ -1416,8 +1320,6 @@ if(got == mymap1.end()){
 
 ```
 
-
-
 -   count
 
 ```c++
@@ -1425,9 +1327,7 @@ if(got == mymap1.end()){
 size_type count ( const key_type& k ) const;
 ```
 
-
-
-### Unordered_map 修改
+#### Unordered_map 修改
 
 -   插入
     -   operator[]
@@ -1455,8 +1355,6 @@ myrecipe.insert(mypantry.begin(), mypantry.end());
 myrecipe.insert({{"sugar",0.8},{"salt",0.1},{"sugar",0.9}});		
 ```
 
-
-
 -   删除 erase()
     -   by key
     -   by position
@@ -1479,6 +1377,213 @@ mymap3.erase(mymap3.begin());
 mymap3.erase("France");
 // 根据范围删除
 mymap3.erase(mymap3.find("Germany"), mymap3.end());
+```
+
+
+
+## STL 迭代器
+
+### for 循环 vs for_each
+
+| for 循环                                          | for_each       |
+| ------------------------------------------------- | -------------- |
+| 循环内可以修改迭代器的值，导致迭代器可能跳过end() | 没有这个问题   |
+| 无法并行计算                                      | 可以并行计算   |
+| 推荐配合索引+size()                               | 推荐配合迭代器 |
+
+
+
+### 例子：三种方法用迭代器遍历 vector 打印数据
+
+-   容器：     `vector`
+
+-   算法：     `for_each`
+
+-   迭代器： `vector<int>::iterator`
+
+```c++
+#include <vector>
+#include <algorithm>
+
+void MyPrint(int val)
+{
+	cout << val << endl;
+}
+
+void test01() {
+
+	//创建vector容器对象，并且通过模板参数指定容器中存放的数据的类型
+	vector<int> v;
+	//向容器中放数据
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+
+	//每一个容器都有自己的迭代器，迭代器是用来遍历容器中的元素
+	//v.begin()返回迭代器，这个迭代器指向容器中第一个数据
+	//v.end()返回迭代器，这个迭代器指向容器元素的最后一个元素的下一个位置
+	//vector<int>::iterator 拿到vector<int>这种容器的迭代器类型
+
+	vector<int>::iterator pBegin = v.begin();
+	vector<int>::iterator pEnd = v.end();
+
+	//第一种遍历方式：
+	while (pBegin != pEnd) {
+		cout << *pBegin << endl;
+		pBegin++;
+	}
+
+	
+	//第二种遍历方式：
+	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+		cout << *it << endl;
+	}
+	cout << endl;
+
+	//第三种遍历方式：
+	//使用STL提供标准遍历算法  头文件 algorithm
+	for_each(v.begin(), v.end(), MyPrint);
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+### 例子：迭代器访问 vector 存放的对象或对象指针
+
+```c++
+#include <vector>
+#include <string>
+
+//自定义数据类型
+class Person {
+public:
+	Person(string name, int age) {
+		mName = name;
+		mAge = age;
+	}
+public:
+	string mName;
+	int mAge;
+};
+
+// 存放对象
+void test01() {
+	vector<Person> v;
+
+	//创建数据
+	Person p1("aaa", 10);
+	Person p2("bbb", 20);
+	Person p3("ccc", 30);
+	Person p4("ddd", 40);
+	Person p5("eee", 50);
+
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+	v.push_back(p5);
+
+	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++) {
+		cout << "Name:" << (*it).mName << " Age:" << (*it).mAge << endl;
+
+	}
+}
+
+
+// 放对象指针
+void test02() {
+
+	vector<Person*> v;
+
+	//创建数据
+	Person p1("aaa", 10);
+	Person p2("bbb", 20);
+	Person p3("ccc", 30);
+	Person p4("ddd", 40);
+	Person p5("eee", 50);
+
+	v.push_back(&p1);
+	v.push_back(&p2);
+	v.push_back(&p3);
+	v.push_back(&p4);
+	v.push_back(&p5);
+
+	for (vector<Person*>::iterator it = v.begin(); it != v.end(); it++) {
+		Person * p = (*it);
+		cout << "Name:" << p->mName << " Age:" << (*it)->mAge << endl;
+	}
+}
+
+
+int main() {
+
+	test01();
+    
+	test02();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+### 例子：迭代器访问嵌套容器
+
+```c++
+#include <vector>
+
+//容器嵌套容器
+void test01() {
+	vector< vector<int> >  v;
+
+	vector<int> v1;
+	vector<int> v2;
+	vector<int> v3;
+	vector<int> v4;
+
+	for (int i = 0; i < 4; i++) {
+		v1.push_back(i + 1);
+		v2.push_back(i + 2);
+		v3.push_back(i + 3);
+		v4.push_back(i + 4);
+	}
+
+	//将容器元素插入到vector v中
+	v.push_back(v1);
+	v.push_back(v2);
+	v.push_back(v3);
+	v.push_back(v4);
+
+	for (vector<vector<int>>::iterator it = v.begin(); it != v.end(); it++) {
+
+		for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++) {
+			cout << *vit << " ";
+		}
+		cout << endl;
+	}
+
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
 ```
 
 
@@ -1666,10 +1771,6 @@ int main() {
 
         
 
-
-
-
-
 ### STL 内建函数对象
 
 -   STL内建了一些函数对象,这些仿函数所产生的对象，用法和一般函数完全相同
@@ -1836,8 +1937,6 @@ int main() {
 
         
 
-
-
 ## STL 常用算法
 
 * 算法主要是由头文件`<algorithm>` `<functional>` `<numeric>`组成。
@@ -1852,7 +1951,7 @@ int main() {
 
 ### STL 常用遍历算法
 
-#### `for_each`     //遍历容器
+#### `for_each`     遍历容器
 
 * 实现遍历容器
 * for_each(iterator beg, iterator end, _func);
@@ -1909,7 +2008,7 @@ int main() {
 
 
 
-#### `transform`   //搬运容器到另一个容器中
+#### `transform`   搬运容器到另一个容器中
 
 * 搬运容器到另一个容器中
 * `transform(iterator beg1, iterator end1, iterator beg2, _func);`
@@ -2440,8 +2539,805 @@ int main() {
 
 ### STL 常用排序算法
 
+#### `sort` 
+
+-   对容器内元素进行排序
+
+-   `sort(iterator beg, iterator end, _Pred);  `
+
+    -   // 按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+    
+    -   //  beg    开始迭代器	
+    
+    -   //  end    结束迭代器	
+    
+    
+    -   // _Pred  谓词
+
+```c++
+#include <algorithm>
+#include <vector>
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test01() {
+	vector<int> v;
+	v.push_back(10);
+	v.push_back(30);
+	v.push_back(50);
+	v.push_back(20);
+	v.push_back(40);
+
+	//sort默认从小到大排序
+	sort(v.begin(), v.end());
+	for_each(v.begin(), v.end(), myPrint);
+	cout << endl;
+
+	//从大到小排序
+	sort(v.begin(), v.end(), greater<int>());
+	for_each(v.begin(), v.end(), myPrint);
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### `random_shuffle` 
+
+* 洗牌   指定范围内的元素随机调整次序
+
+- `random_shuffle(iterator beg, iterator end);  `
+
+    -   // 指定范围内的元素随机调整次序
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+
+
+
+```c++
+#include <algorithm>
+#include <vector>
+#include <ctime>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	srand((unsigned int)time(NULL));
+	vector<int> v;
+	for(int i = 0 ; i < 10;i++)
+	{
+		v.push_back(i);
+	}
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+
+	//打乱顺序
+	random_shuffle(v.begin(), v.end());
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### `merge`
+
+* 两个容器元素合并，并存储到另一容器中
+
+- `merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);  `
+
+    -   // 容器元素合并，并存储到另一容器中
+    
+    -   // 注意: 两个容器必须是**有序的**
+    
+    -   // beg1   容器1开始迭代器
+    
+    -   // end1   容器1结束迭代器
+    
+    -   // beg2   容器2开始迭代器
+    
+    -   // end2   容器2结束迭代器
+    
+    -   // dest    目标容器开始迭代器
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	vector<int> v2;
+	for (int i = 0; i < 10 ; i++) 
+    {
+		v1.push_back(i);
+		v2.push_back(i + 1);
+	}
+
+	vector<int> vtarget;
+	//目标容器需要提前开辟空间
+	vtarget.resize(v1.size() + v2.size());
+	//合并  需要两个有序序列
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), vtarget.begin());
+	for_each(vtarget.begin(), vtarget.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### `reverse`
+
+-   将容器内元素进行反转
+
+- `reverse(iterator beg, iterator end);  `
+
+    -   // 反转指定范围的元素
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v;
+	v.push_back(10);
+	v.push_back(30);
+	v.push_back(50);
+	v.push_back(20);
+	v.push_back(40);
+
+	cout << "反转前： " << endl;
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+
+	cout << "反转后： " << endl;
+
+	reverse(v.begin(), v.end());
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
 ### STL 常用拷贝和替换算法
+
+#### copy 
+
+* 容器内指定范围的元素拷贝到另一容器中
+
+- `copy(iterator beg, iterator end, iterator dest);  `
+
+    -   // 按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+    
+    -   // beg  开始迭代器
+    
+    -   // end  结束迭代器
+    
+    -   // dest 目标起始迭代器
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i + 1);
+	}
+	vector<int> v2;
+	v2.resize(v1.size());
+	copy(v1.begin(), v1.end(), v2.begin());
+
+	for_each(v2.begin(), v2.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### replace
+
+* 将容器内指定范围的旧元素修改为新元素
+
+- `replace(iterator beg, iterator end, oldvalue, newvalue);  `
+
+    -   // 将区间内旧元素 替换成 新元素
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+    
+    -   // oldvalue 旧元素
+    
+    -   // newvalue 新元素
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v;
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(20);
+	v.push_back(40);
+	v.push_back(50);
+	v.push_back(10);
+	v.push_back(20);
+
+	cout << "替换前：" << endl;
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+
+	//将容器中的20 替换成 2000
+	cout << "替换后：" << endl;
+	replace(v.begin(), v.end(), 20,2000);
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### replace_if
+
+* 将区间内满足条件的元素，替换成指定元素
+
+- `replace_if(iterator beg, iterator end, _pred, newvalue);  `
+
+    -   // 按条件替换元素，满足条件的替换成指定元素
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+    
+    -   // _pred 谓词
+    
+    -   // newvalue 替换的新元素
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+class ReplaceGreater30
+{
+public:
+	bool operator()(int val)
+	{
+		return val >= 30;
+	}
+
+};
+
+void test01()
+{
+	vector<int> v;
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(20);
+	v.push_back(40);
+	v.push_back(50);
+	v.push_back(10);
+	v.push_back(20);
+
+	cout << "替换前：" << endl;
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+
+	//将容器中大于等于的30 替换成 3000
+	cout << "替换后：" << endl;
+	replace_if(v.begin(), v.end(), ReplaceGreater30(), 3000);
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### swap
+
+* 互换两个容器的元素
+
+- `swap(container c1, container c2);  `
+
+    -   // 互换两个容器的元素
+    
+    -   // c1容器1
+    
+    -   // c2容器2
+
+```c++
+#include <algorithm>
+#include <vector>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	vector<int> v2;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+		v2.push_back(i+100);
+	}
+
+	cout << "交换前： " << endl;
+	for_each(v1.begin(), v1.end(), myPrint());
+	cout << endl;
+	for_each(v2.begin(), v2.end(), myPrint());
+	cout << endl;
+
+	cout << "交换后： " << endl;
+	swap(v1, v2);
+	for_each(v1.begin(), v1.end(), myPrint());
+	cout << endl;
+	for_each(v2.begin(), v2.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
 
 ### STL 常用算术生成算法
 
+* 算术生成算法属于小型算法，使用时包含的头文件为 `#include <numeric>`
+
+- `accumulate`      // 计算容器元素累计总和
+
+- `fill`                 // 向容器中添加元素
+
+
+
+#### accumulate
+
+*  计算区间内 容器元素累计总和
+
+- `accumulate(iterator beg, iterator end, value);  `
+
+    -   // 计算容器元素累计总和
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+    
+    -   // value 起始值
+
+```c++
+#include <numeric>
+#include <vector>
+void test01()
+{
+	vector<int> v;
+	for (int i = 0; i <= 100; i++) {
+		v.push_back(i);
+	}
+
+	int total = accumulate(v.begin(), v.end(), 0);
+
+	cout << "total = " << total << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### fill
+
+* 向容器中填充指定的元素
+
+- `fill(iterator beg, iterator end, value);  `
+
+    -   // 向容器中填充元素
+    
+    -   // beg 开始迭代器
+    
+    -   // end 结束迭代器
+    
+    -   // value 填充的值
+
+```c++
+#include <numeric>
+#include <vector>
+#include <algorithm>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+
+	vector<int> v;
+	v.resize(10);
+	//填充
+	fill(v.begin(), v.end(), 100);
+
+	for_each(v.begin(), v.end(), myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
 ### STL 常用集合算法
+
+- `set_intersection`          // 求两个容器的交集
+
+- `set_union`                       // 求两个容器的并集
+
+- `set_difference `              // 求两个容器的差集
+
+
+
+#### set_intersection
+
+* 求两个容器的交集
+
+- `set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);  `
+
+    -   // 求两个集合的交集
+
+-   // **注意:两个集合必须是有序序列**
+
+    -   // beg1 容器1开始迭代器
+
+    -   // end1 容器1结束迭代器
+
+    -   // beg2 容器2开始迭代器
+
+    -   // end2 容器2结束迭代器
+
+    -   // dest 目标容器开始迭代器
+
+
+
+```c++
+#include <vector>
+#include <algorithm>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	vector<int> v2;
+	for (int i = 0; i < 10; i++)
+    {
+		v1.push_back(i);
+		v2.push_back(i+5);
+	}
+
+	vector<int> vTarget;
+	//取两个里面较小的值给目标容器开辟空间
+	vTarget.resize(min(v1.size(), v2.size()));
+
+	//返回目标容器的最后一个元素的迭代器地址
+	vector<int>::iterator itEnd = 
+        set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), vTarget.begin());
+
+	for_each(vTarget.begin(), itEnd, myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### set_union
+
+* 求两个集合的并集
+
+- `set_union(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);  `
+
+    -   // 求两个集合的并集
+
+-   // **注意:两个集合必须是有序序列**
+
+    -   // beg1 容器1开始迭代器
+
+    -   // end1 容器1结束迭代器
+
+    -   // beg2 容器2开始迭代器
+
+    -   // end2 容器2结束迭代器
+
+    -   // dest 目标容器开始迭代器
+
+```c++
+#include <vector>
+#include <algorithm>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	vector<int> v2;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+		v2.push_back(i+5);
+	}
+
+	vector<int> vTarget;
+	//取两个容器的和给目标容器开辟空间
+	vTarget.resize(v1.size() + v2.size());
+
+	//返回目标容器的最后一个元素的迭代器地址
+	vector<int>::iterator itEnd = 
+        set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), vTarget.begin());
+
+	for_each(vTarget.begin(), itEnd, myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+#### set_difference 
+
+* 求两个集合的差集
+
+- `set_difference(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);  `
+
+    -   // 求两个集合的差集
+
+-   // **注意:两个集合必须是有序序列**
+
+    -   // beg1 容器1开始迭代器
+
+    -   // end1 容器1结束迭代器
+
+    -   // beg2 容器2开始迭代器
+
+    -   // end2 容器2结束迭代器
+
+    -   // dest 目标容器开始迭代器
+
+```c++
+#include <vector>
+#include <algorithm>
+
+class myPrint
+{
+public:
+	void operator()(int val)
+	{
+		cout << val << " ";
+	}
+};
+
+void test01()
+{
+	vector<int> v1;
+	vector<int> v2;
+	for (int i = 0; i < 10; i++) {
+		v1.push_back(i);
+		v2.push_back(i+5);
+	}
+
+	vector<int> vTarget;
+	//取两个里面较大的值给目标容器开辟空间
+	vTarget.resize( max(v1.size() , v2.size()));
+
+	//返回目标容器的最后一个元素的迭代器地址
+	cout << "v1与v2的差集为： " << endl;
+	vector<int>::iterator itEnd = 
+        set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), vTarget.begin());
+	for_each(vTarget.begin(), itEnd, myPrint());
+	cout << endl;
+
+
+	cout << "v2与v1的差集为： " << endl;
+	itEnd = set_difference(v2.begin(), v2.end(), v1.begin(), v1.end(), vTarget.begin());
+	for_each(vTarget.begin(), itEnd, myPrint());
+	cout << endl;
+}
+
+int main() {
+
+	test01();
+
+	system("pause");
+
+	return 0;
+}
+```
+
