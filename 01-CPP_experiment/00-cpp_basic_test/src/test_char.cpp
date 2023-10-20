@@ -83,6 +83,30 @@ void test01()
     std::cout << str2 << "\n";
 
     /**
+     * @brief 测试 strcpy
+     *
+     */
+
+    // 没有const修饰
+    char *homework = new char[10];
+    std::cout << "static_cast<void *>(homework): " << static_cast<void *>(homework) << "\n";  // 0x5652ccb55280
+    strcpy(homework, "math");
+    std::cout << "static_cast<void *>(homework): " << static_cast<void *>(homework) << "\n";  // 0x5652ccb55280
+    std::cout << "homework: " << homework << "\n";                                            // homework: math
+
+    // const 修饰 指针，strcpy 只能赋值第一个字符
+    char *const homework2 = new char[10];
+    std::cout << "static_cast<void *>(homework2): " << static_cast<void *>(homework2) << "\n";  // 0x556e61cb72a0
+    strcpy(homework2, "english");
+    std::cout << "static_cast<void *>(homework2): " << static_cast<void *>(homework2) << "\n";  // 0x556e61cb72a0
+    std::cout << "homework2: " << *homework2 << "\n";                                           // homework2: e
+
+    const char *homework3 = new char[10];
+    std::cout << "static_cast<const void *>(homework3): " << static_cast<const void *>(homework3) << "\n";  // 0x55d72074c2c0
+    // strcpy(homework3, "english"); // const 修饰 char 内容无法被修改
+    std::cout << "homework3: " << *homework3 << "\n";  // homework3:
+
+    /**
      * @brief 总结
         1.char *p = "hello"，p指针指向的值是可以变化的，但是p只能指向（字符串）常量，并且其指向的内存范围里内容不能发生改变。规范写法为const char
         *p或者char const *p，p为一个常量指针。
