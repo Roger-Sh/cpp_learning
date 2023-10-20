@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 /**
  * @brief 测试 const 的基础用法
@@ -227,8 +228,9 @@ public:
     int age_;
     std::string address_;
     int *score_;
+    std::vector<int> scores_vec;
     char homework_[10];
-    char *hobby_;
+    char *hobby_;  // 不分配内存的情况下与 std::vector 冲突
 
     /**
      * @brief Construct a new Student object
@@ -240,6 +242,8 @@ public:
     Student(const std::string name, const int id, const int age) : name_(name), id_(id), age_(age)
     {
         this->score_ = new int;
+
+        this->hobby_ = new char[10];
     }
 
     /**
@@ -255,6 +259,7 @@ public:
         // 成员指针指向的内容，需要实现深拷贝
         this->score_ = new int;
         *this->score_ = *stu.score_;
+        this->hobby_ = new char[10];
     }
 
     ~Student()
@@ -284,6 +289,14 @@ public:
         std::cout << "name_: " << this->name_ << "\n";
         std::cout << "id_: " << this->id_ << "\n";
         std::cout << "age_: " << this->age_ << "\n";
+    }
+
+    void ShowScores() const
+    {
+        for (size_t i = 0; i < this->scores_vec.size(); i++)
+        {
+            std::cout << "this->scores_vec[" << i << "]: " << this->scores_vec[i] << "\n";
+        }
     }
 };
 
@@ -332,10 +345,41 @@ void test03_const_class()
     stu3.Show();
 }
 
+/**
+ * @brief 测试 const 修饰 class 中的 vector
+ *
+ */
+void test04_const_class_vec()
+{
+    std::cout << "test04_const_class_vec: start\n";
+
+    Student stu1("stu1", 1, 10);
+    stu1.scores_vec.push_back(90);
+    stu1.scores_vec.push_back(91);
+    stu1.scores_vec.push_back(92);
+    stu1.ShowScores();
+    std::vector<int> scores_vec;
+    scores_vec.push_back(80);
+    scores_vec.push_back(81);
+    scores_vec.push_back(82);
+    stu1.scores_vec = scores_vec;
+    stu1.ShowScores();
+
+    // const 修饰 vector时，vector 本身以及内容都被修饰
+    const Student stu2("stu2", 2, 12);
+    // stu2.scores_vec[0] = 63;         // const 修饰 对象时，成员vector内容被修饰
+    // stu2.scores_vec.push_back(70);   // const 修饰 对象时，成员vector无法被添加新的内容
+    // stu2.scores_vec.push_back(71);
+    // stu2.scores_vec.push_back(72);
+    stu2.ShowScores();
+    // stu2.scores_vec = scores_vec;    // const 修饰 对象时，成员vector本身被修饰
+}
+
 int main()
 {
     test01_const_basic();
     test02_const_argument();
     test03_const_class();
+    test04_const_class_vec();
     return 0;
 }
