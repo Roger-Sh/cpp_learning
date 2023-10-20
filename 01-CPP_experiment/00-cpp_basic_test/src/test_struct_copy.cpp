@@ -7,7 +7,6 @@ struct Person
     int* ID;
 };
 
-
 int main()
 {
     Person p1;
@@ -24,7 +23,7 @@ int main()
     std::cout << p2.age << " " << p2.name << " " << *p2.ID << std::endl;
 
     delete p1.ID;
-    delete p2.ID;   // 如果struct里面有指针, 那么在delete 的时候会删除两次
+    delete p2.ID;  // 如果struct里面有指针, 那么在delete 的时候会删除两次，需要通过深拷贝的方式处理
 
     return 0;
 }
