@@ -244,7 +244,10 @@ public:
 
 /**
  * @brief 测试 vector 中的对象是否会互相影响
- *
+ * vector 在调用 push_back 时，会调用拷贝构造函数 Student(const Student& stu)
+ * vector 在调用 = 时，如果左右的size一致，会调用 = 赋值函数 void operator=(const Student& stu)
+ * 当实现自己的类时，如果需要用到 vector，最好实现这两种方式进行深拷贝，否则有可能出现浅拷贝问题
+ * vector的模板类型应该具有公有的拷贝构造函数和重载的赋值操作符函数。
  */
 void test03_vec_class()
 {
