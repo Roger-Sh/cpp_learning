@@ -5,6 +5,10 @@
 #include <iostream>
 #include "LinkList.h"
 
+/**
+ * @brief Construct a new Link List:: Link List object
+ *
+ */
 LinkList::LinkList(){
     head = new LinkNode;
     size = 0;
@@ -13,7 +17,10 @@ LinkList::LinkList(){
     head->next = nullptr;
 }
 
-// 释放链表内存由析构函数代替
+/**
+ * @brief Destroy the Link List:: Link List object
+ * 释放链表内存由析构函数代替
+ */
 LinkList::~LinkList() {
     if (head == nullptr){
         return;
@@ -29,8 +36,12 @@ LinkList::~LinkList() {
     std::cout << "free LinkList!" << std::endl;
 }
 
-
-// 指定位置插入
+/**
+ * @brief 指定位置插入
+ *
+ * @param pos
+ * @param data
+ */
 void LinkList::insert_linkList(int pos, void* data){
     if (head == nullptr){
         return;
@@ -60,7 +71,11 @@ void LinkList::insert_linkList(int pos, void* data){
     size++;
 }
 
-// 删除指定位置的值
+/**
+ * @brief 删除指定位置的值
+ *
+ * @param pos
+ */
 void LinkList::remove_linkList_pos(int pos){
     if (head == nullptr){
         return;
@@ -78,12 +93,21 @@ void LinkList::remove_linkList_pos(int pos){
     size --;
 }
 
-// 获得链表的长度
+/**
+ * @brief 获得链表的长度
+ *
+ * @return int
+ */
 int LinkList::get_size() const{
     return size;
 }
 
-// 查找元素值位置
+/**
+ * @brief 查找元素值位置
+ *
+ * @param data
+ * @return int
+ */
 int LinkList::find_linkList(void* data){
     if (head == nullptr){
         return -1;
@@ -104,12 +128,20 @@ int LinkList::find_linkList(void* data){
     return -1;
 }
 
-// 返回第一个结点
+/**
+ * @brief 返回第一个结点
+ *
+ * @return void*
+ */
 void *LinkList::get_front(){
     return head -> next ->data;
 }
 
-// 打印
+/**
+ * @brief 打印
+ *
+ * @param print
+ */
 void LinkList::print_linkList(PRINTLINKNODE print){
     if (head == nullptr){
         return;
@@ -121,6 +153,3 @@ void LinkList::print_linkList(PRINTLINKNODE print){
     }
 
 }
-
-
-

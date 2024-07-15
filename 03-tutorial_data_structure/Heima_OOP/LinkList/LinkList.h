@@ -40,7 +40,6 @@ public:
     // 返回第一个结点
     void *get_front();
 
-
     // 打印
     void print_linkList(PRINTLINKNODE print);
 
