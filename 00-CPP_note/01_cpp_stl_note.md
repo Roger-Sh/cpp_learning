@@ -6,6 +6,7 @@
 
 - STL - Standard Template Library
 - STL 分为六大组件
+  - 容器, 算法, 迭代器, 仿函数, 适配器, 空间配置器
   - 容器，container
     - 序列式容器
       - 强调排序， 每个元素有固定位置
@@ -49,9 +50,10 @@
 
 
 
+
 ## STL 容器
 
-### String
+### String 字符串
 
 #### string 构造函数
 
@@ -71,7 +73,7 @@ std::string s4(10, 'a');
 
 ```
 
-#### string 赋值
+#### string 赋值 =
 
 ```c++
 // operator =
@@ -86,7 +88,7 @@ string& assign(const string &s);	// 字符串s
 string& assign(int n, char c);	// n个字符c
 ```
 
-#### string 拼接
+#### string 拼接 +=
 
 ```c++
 // operator +=
@@ -101,7 +103,7 @@ string& append(const string &s);
 string& append(const string &s, int pos, int n);
 ```
 
-#### stirng 查找与替换
+#### stirng 查找与替换 find replace
 
 ```c++
 // method find() 查找 *****************************
@@ -132,7 +134,7 @@ string& replace(int pos, int n,const char* s);
 
 ```
 
-#### string 比较
+#### string 比较 compare
 
 ```c++
 // method compare()
@@ -141,14 +143,14 @@ int compare(const string &s) const;      //与字符串s比较
 int compare(const char *s) const;     //与字符串s比较
 ```
 
-#### string 字符存取
+#### string 字符存取 [] at
 
 ```c++
 char& operator[](int n);     //通过[]方式取字符
 char& at(int n);                     //通过at方法获取字符
 ```
 
-#### string 插入和删除
+#### string 插入和删除 insert erase
 
 ```c++
 string& insert(int pos, const char* s);                 //插入字符串
@@ -157,7 +159,7 @@ string& insert(int pos, int n, char c);                //在指定位置插入n�
 string& erase(int pos, int n = npos);                    //删除从Pos开始的n个字符 
 ```
 
-#### string 子串
+#### string 子串 substr
 
 ```c++
 string substr(int pos = 0, int n = npos) const;   //返回由pos开始的n个字符组成的字符串
@@ -165,7 +167,7 @@ string substr(int pos = 0, int n = npos) const;   //返回由pos开始的n个字
 
 
 
-### Vector
+### Vector 向量, 动态数组
 
 #### Vector 构造
 
@@ -176,7 +178,7 @@ vector(n, elem);                            //构造函数将n个elem拷贝给�
 vector(const vector &vec);         //拷贝构造函数。
 ```
 
-#### Vector 赋值
+#### Vector 赋值 = , (beg, end), (n, elem)
 
 ```c++
 vector& operator=(const vector &vec);	//重载等号操作符
@@ -184,7 +186,7 @@ assign(beg, end);       //将[beg, end)区间中的数据拷贝赋值给本身�
 assign(n, elem);        //将n个elem拷贝赋值给本身。
 ```
 
-#### Vector 容量与大小
+#### Vector 容量与大小 empty, capacity, size, resize
 
 ```c++
 //判断容器是否为空
@@ -205,7 +207,7 @@ resize(int num);
 resize(int num, elem);`  
 ```
 
-#### Vector 插入与删除
+#### Vector 插入与删除 push_back, pop_back, insert, erase, clear
 
 ```c++
 push_back(ele);                                         //尾部插入元素ele
@@ -217,7 +219,7 @@ erase(const_iterator start, const_iterator end);//删除迭代器从start到end�
 clear();                                                        //删除容器中所有元素
 ```
 
-#### Vector 数据存取
+#### Vector 数据获取 at, [], front, back
 
 ```c++
 at(int idx);     //返回索引idx所指的数据
@@ -226,13 +228,13 @@ front();            //返回容器中第一个数据元素
 back();              //返回容器中最后一个数据元素
 ```
 
-#### Vector 互换容器
+#### Vector 互换容器 swap
 
 ```c++
 swap(vec);  // 将vec与本身的元素互换
 ```
 
-#### Vector 预留空间
+#### Vector 预留空间 reserve
 
 ```c++
 reserve(int len); //容器预留len个元素长度，预留位置不初始化，元素不可访问。
@@ -240,7 +242,7 @@ reserve(int len); //容器预留len个元素长度，预留位置不初始化，
 
 
 
-### Deque
+### Deque 双端数组
 
 #### Deque 特点
 
@@ -262,7 +264,7 @@ deque(n, elem);                    //构造函数将n个elem拷贝给本身。
 deque(const deque &deq);   //拷贝构造函数
 ```
 
-#### Deque 赋值
+#### Deque 赋值 =, (beg, end), (n. elem)
 
 ```c++
 deque& operator=(const deque &deq);          //重载等号操作符
@@ -270,7 +272,7 @@ assign(beg, end);                                           //将[beg, end)区�
 assign(n, elem);                                             //将n个elem拷贝赋值给本身。
 ```
 
-#### Deque 大小
+#### Deque 大小 empty, size, resize
 
 ```c++
 //判断容器是否为空
@@ -288,7 +290,7 @@ deque.resize(num);
 deque.resize(num, elem);     
 ```
 
-#### Deque 插入与删除
+#### Deque 插入与删除 push_back, push_front, pop_back, pop_front
 
 - 两端插入操作
 
@@ -317,7 +319,7 @@ deque.resize(num, elem);
   ```
 
 
-#### Deque 数据存取
+#### Deque 数据获取 at, [], front, back
 
 ```c++
 at(int idx);     	//返回索引idx所指的数据
@@ -326,7 +328,7 @@ front();    		//返回容器中第一个数据元素
 back();        		//返回容器中最后一个数据元素
 ```
 
-#### Deque 排序
+#### Deque 排序 sort
 
 ```c++
 sort(iterator beg, iterator end)  //对beg和end区间内元素进行排序
@@ -334,7 +336,7 @@ sort(iterator beg, iterator end)  //对beg和end区间内元素进行排序
 
 
 
-### Stack
+### Stack 栈 deque, vector
 
 #### Stack 特点
 
@@ -347,7 +349,16 @@ sort(iterator beg, iterator end)  //对beg和end区间内元素进行排序
 -   栈中进入数据称为  --- **入栈**  `push`
 
 
--   栈中弹出数据称为  --- **出栈**  `pop`
+- 栈中弹出数据称为  --- **出栈**  `pop`
+
+- 默认情况下, `std::stack` 使用 `std::deque` 作为底层容器来实现。但也可以选择使用 `std::vector` 或 `std::list` 作为底层容器。
+
+  ```cpp
+  std::stack<int> s;  // 使用 std::deque 作为底层容器
+  std::stack<int, std::vector<int>> s2;  // 使用 std::vector 作为底层容器
+  ```
+
+  
 
 
 #### Stack 构造
@@ -360,13 +371,13 @@ stack<T> stk;
 stack(const stack &stk);
 ```
 
-#### Stack 赋值
+#### Stack 赋值 = 
 
 ```c++
 stack& operator=(const stack &stk);
 ```
 
-#### Stack 存取
+#### Stack 存取 push, pop, top
 
 ```c++
 // 栈顶添加元素
@@ -379,7 +390,7 @@ stk.pop();
 stk.top();
 ```
 
-#### Stack 大小
+#### Stack 大小 empty size
 
 ```c++
 stk.empty();
@@ -388,7 +399,7 @@ stk.size();
 
  
 
-### Queue
+### Queue 队列 deque, list
 
 #### Queue 特点
 
@@ -404,7 +415,16 @@ stk.size();
 -   队列中进数据称为 --- **入队**    `push`
 
 
--   队列中出数据称为 --- **出队**    `pop`
+- 队列中出数据称为 --- **出队**    `pop`
+
+- 默认情况下, `std::queue` 使用 `std::deque` 作为底层容器来实现。但也可以选择使用 `std::list` 作为底层容器。
+
+  ```cpp
+  std::queue<int> q;  // 使用 std::deque 作为底层容器
+  std::queue<int, std::list<int>> q2;  // 使用 std::list 作为底层容器
+  ```
+
+  
 
 
 #### Queue 构造
@@ -417,13 +437,13 @@ queue<T> que;
 queue(const queue &que);
 ```
 
-#### Queue 赋值
+#### Queue 赋值 = 
 
 ```c++
 queue& operator=(const queue &que);
 ```
 
-#### Queue 存取
+#### Queue 存取 push, pop, back, front
 
 ```c++
 // 队尾添加元素
@@ -439,7 +459,7 @@ que.back();
 que.front();
 ```
 
-#### Queue 大小
+#### Queue 大小 empty, size
 
 ```c++
 que.empty();
@@ -448,19 +468,18 @@ que.size();
 
 
 
-### List
+### List 链表
 
 #### List 特点
 
 -   **功能：**将数据进行链式存储
 
 -   **链表**（list）是一种物理存储单元上非连续的存储结构，数据元素的逻辑顺序是通过链表中的指针链接实现的
-
     -   链表的组成：链表由一系列**结点**组成
-
+    
 -   结点的组成：一个是存储数据元素的**数据域**，另一个是存储下一个结点地址的**指针域**
 
--   STL中的链表是一个双向循环链表
+-   STL中的链表是一个**双向循环链表**
 
 -   List有一个重要的性质，插入操作和删除操作都不会造成原有list迭代器的失效，这在vector是不成立的。
 
@@ -491,7 +510,7 @@ list(n,elem);
 list(const list &lst);
 ```
 
-#### List 赋值和交换
+#### List 赋值和交换 assign, =, swap
 
 ```c++
 // 将[beg, end)区间中的数据拷贝赋值给本身。
@@ -507,7 +526,7 @@ list& operator=(const list &lst);
 swap(lst);
 ```
 
-#### List 大小
+#### List 大小 size, empty, resize
 
 ```c++
 // 返回容器中元素的个数
@@ -526,7 +545,7 @@ resize(num, elem);
 
 ```
 
-#### List 插入和删除
+#### List 插入和删除 push, pop, insert, erase, clear, remove
 
 ```c++
 // 在容器尾部加入一个元素
@@ -563,7 +582,7 @@ erase(pos);
 remove(elem);
 ```
 
-#### List 数据存取
+#### List 数据存取 front, back
 
 ```c++
 // 获取第一个元素
@@ -573,13 +592,13 @@ front();
 back();
 ```
 
-#### List 反转和排序
+#### List 反转和排序 reverse, sort
 
 -   反转
 
 ```c++
 // 反转链表
-reerse();
+reverse();
 ```
 
 -   排序
@@ -675,7 +694,7 @@ int main()
 
 
 
-### Set/Multiset
+### Set/Multiset 有序集合 BiTree
 
 #### Set 特点
 
@@ -684,10 +703,9 @@ int main()
 -   所有元素都会在插入时自动被排序
 
 -   **set和multiset区别**：
-
-    * set不允许容器中有重复的元素
-
-    * multiset允许容器中有重复的元素
+* set不允许容器中有重复的元素
+    
+* multiset允许容器中有重复的元素
 
 
 #### Set 构造与赋值
@@ -880,7 +898,7 @@ int main() {
 
 
 
-### Unordered_set
+### Unordered_set 无序集合 BiTree
 
 #### Unordered_set 特点
 
@@ -998,7 +1016,7 @@ set1.rehash(20);
 
 
 
-### Pair
+### Pair 对
 
 #### Pair 特点
 
@@ -1091,7 +1109,7 @@ int main(int argc, char **argv)
 
 
 
-### Map/Multimap
+### Map/Multimap 有序映射 红黑树实现
 
 #### Map 特点
 
@@ -1214,7 +1232,7 @@ int main() {
 
 
 
-### Unordered_map
+### Unordered_map 无序映射 哈希表
 
 #### Unordered_map 特点
 
@@ -1229,7 +1247,7 @@ int main() {
     -   关联性
         -   关联容器中的元素由他们的键引用，而不是由他们在容器中的绝对位置引用。
     -   无序性
-        -   无序容器使用散列表来组织它们的元素，散列表允许通过它们的键快速访问元素。
+        -   无序容器使用**散列表**来组织它们的元素，散列表允许通过它们的键快速访问元素。
     -   Map映射
         -   每个元素将一个键key与一个映射值value相关联：键意味着标识其主要内容是映射值的元素。
     -   key的唯一性
@@ -1393,200 +1411,21 @@ mymap3.erase(mymap3.find("Germany"), mymap3.end());
 
 
 
-### 例子：三种方法用迭代器遍历 vector 打印数据
+### 迭代 vector
 
--   容器：     `vector`
+### 迭代 List
 
--   算法：     `for_each`
+### 迭代 Stack
 
--   迭代器： `vector<int>::iterator`
+### 迭代 Queue
 
-```c++
-#include <vector>
-#include <algorithm>
+### 迭代 Set
 
-void MyPrint(int val)
-{
-	cout << val << endl;
-}
+### 迭代 Unordered_set
 
-void test01() {
+### 迭代 map
 
-	//创建vector容器对象，并且通过模板参数指定容器中存放的数据的类型
-	vector<int> v;
-	//向容器中放数据
-	v.push_back(10);
-	v.push_back(20);
-	v.push_back(30);
-	v.push_back(40);
-
-	//每一个容器都有自己的迭代器，迭代器是用来遍历容器中的元素
-	//v.begin()返回迭代器，这个迭代器指向容器中第一个数据
-	//v.end()返回迭代器，这个迭代器指向容器元素的最后一个元素的下一个位置
-	//vector<int>::iterator 拿到vector<int>这种容器的迭代器类型
-
-	vector<int>::iterator pBegin = v.begin();
-	vector<int>::iterator pEnd = v.end();
-
-	//第一种遍历方式：
-	while (pBegin != pEnd) {
-		cout << *pBegin << endl;
-		pBegin++;
-	}
-
-	
-	//第二种遍历方式：
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
-		cout << *it << endl;
-	}
-	cout << endl;
-
-	//第三种遍历方式：
-	//使用STL提供标准遍历算法  头文件 algorithm
-	for_each(v.begin(), v.end(), MyPrint);
-}
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
-}
-```
-
-
-
-### 例子：迭代器访问 vector 存放的对象或对象指针
-
-```c++
-#include <vector>
-#include <string>
-
-//自定义数据类型
-class Person {
-public:
-	Person(string name, int age) {
-		mName = name;
-		mAge = age;
-	}
-public:
-	string mName;
-	int mAge;
-};
-
-// 存放对象
-void test01() {
-	vector<Person> v;
-
-	//创建数据
-	Person p1("aaa", 10);
-	Person p2("bbb", 20);
-	Person p3("ccc", 30);
-	Person p4("ddd", 40);
-	Person p5("eee", 50);
-
-	v.push_back(p1);
-	v.push_back(p2);
-	v.push_back(p3);
-	v.push_back(p4);
-	v.push_back(p5);
-
-	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++) {
-		cout << "Name:" << (*it).mName << " Age:" << (*it).mAge << endl;
-
-	}
-}
-
-
-// 放对象指针
-void test02() {
-
-	vector<Person*> v;
-
-	//创建数据
-	Person p1("aaa", 10);
-	Person p2("bbb", 20);
-	Person p3("ccc", 30);
-	Person p4("ddd", 40);
-	Person p5("eee", 50);
-
-	v.push_back(&p1);
-	v.push_back(&p2);
-	v.push_back(&p3);
-	v.push_back(&p4);
-	v.push_back(&p5);
-
-	for (vector<Person*>::iterator it = v.begin(); it != v.end(); it++) {
-		Person * p = (*it);
-		cout << "Name:" << p->mName << " Age:" << (*it)->mAge << endl;
-	}
-}
-
-
-int main() {
-
-	test01();
-    
-	test02();
-
-	system("pause");
-
-	return 0;
-}
-```
-
-
-
-### 例子：迭代器访问嵌套容器
-
-```c++
-#include <vector>
-
-//容器嵌套容器
-void test01() {
-	vector< vector<int> >  v;
-
-	vector<int> v1;
-	vector<int> v2;
-	vector<int> v3;
-	vector<int> v4;
-
-	for (int i = 0; i < 4; i++) {
-		v1.push_back(i + 1);
-		v2.push_back(i + 2);
-		v3.push_back(i + 3);
-		v4.push_back(i + 4);
-	}
-
-	//将容器元素插入到vector v中
-	v.push_back(v1);
-	v.push_back(v2);
-	v.push_back(v3);
-	v.push_back(v4);
-
-	for (vector<vector<int>>::iterator it = v.begin(); it != v.end(); it++) {
-
-		for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++) {
-			cout << *vit << " ";
-		}
-		cout << endl;
-	}
-
-}
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
-}
-```
-
-
+### 迭代 unordered_map
 
 ## STL 函数对象(仿函数)
 

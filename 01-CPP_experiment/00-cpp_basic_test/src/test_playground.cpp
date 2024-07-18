@@ -1,64 +1,67 @@
 #include <iostream>
+#include <stack>
 #include <queue>
 #include <vector>
+#include <unordered_set>
 
-using namespace std;
-
-// 图节点定义
-struct Node
+struct TreeNode
 {
-    int data;                 // 数据
-    vector<Node *> neighbors; // 邻居节点
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode() : val(0), left(nullptr), right(nullptr){};
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right){};
 };
 
-// 广度优先搜索函数
-void bfs(Node *start)
+void get_tree_sum(TreeNode *node, int &temp_sum, int &total_sum)
 {
-    // 创建一个队列
-    queue<Node *> q;
-
-    //
-    vector<bool> visited(start->data + 1, false);
-
-    q.push(start);
-    visited[start->data] = true;
-
-    while (!q.empty())
+    // check nullptr
+    if (node == nullptr)
     {
-        Node *current = q.front();
-        q.pop();
-
-        cout << current->data << " ";
-
-        for (Node *neighbor : current->neighbors)
-        {
-            if (!visited[neighbor->data])
-            {
-                visited[neighbor->data] = true;
-                q.push(neighbor);
-            }
-        }
+        return;
     }
+
+    temp_sum *= 10;
+    temp_sum += node->val;
+
+    // 末端叶子, 加入总和后, 将sum恢复到上一个状态
+    if (node->left == nullptr && node->right == nullptr)
+    {
+        std::cout << "temp_sum: " << temp_sum << std::endl;
+        total_sum += temp_sum;
+    }
+    else
+    {
+        get_tree_sum(node->left, temp_sum, total_sum);
+        get_tree_sum(node->right, temp_sum, total_sum);
+    }
+
+    // 当前节点跑完后, 将sum恢复到上一个状态
+    temp_sum -= node->val;
+    temp_sum /= 10;
 }
 
 int main()
 {
-    // 创建图节点
-    Node *n1 = new Node{1};
-    Node *n2 = new Node{2};
-    Node *n3 = new Node{3};
-    Node *n4 = new Node{4};
-    Node *n5 = new Node{5};
+    TreeNode *node_1 = new TreeNode(1);
+    TreeNode *node_2 = new TreeNode(3);
+    TreeNode *node_3 = new TreeNode(5);
+    TreeNode *node_4 = new TreeNode(4);
+    TreeNode *node_5 = new TreeNode(2);
+    TreeNode *node_6 = new TreeNode(9);
+    node_1->left = node_2;
+    node_1->right = node_3;
+    node_2->left = node_4;
+    node_2->right = node_5;
+    node_3->left = node_6;
 
-    // 添加邻居关系
-    n1->neighbors = {n2, n3, n4};
-    n2->neighbors = {n1, n4, n5};
-    n3->neighbors = {n1, n4, n5};
-    n4->neighbors = {n1, n2, n3, n5};
-    n5->neighbors = {n2, n3, n4};
+    int sum = 0;
+    int total_sum = 0;
+    get_tree_sum(node_1, sum, total_sum);
 
-    // 从节点1开始进行广度优先搜索
-    bfs(n1);
+    std::cout << "total sum: " << total_sum << std::endl;
 
     return 0;
 }
